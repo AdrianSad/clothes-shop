@@ -5,7 +5,8 @@ const ProductContext = React.createContext();
 class ProductProvider extends Component {
     state = {
         sidebarOpen: false,
-        cartOpen: false
+        cartOpen: false,
+        cartItems: 0
     };
 
     handleSidebar = () => {
@@ -28,10 +29,10 @@ class ProductProvider extends Component {
         return (
             <ProductContext.Provider value={{
                 ...this.state,
-                handleSidebar: this.handleSidebar(),
-                handleCart: this.handleCart(),
-                closeCart: this.closeCart(),
-                openCart: this.openCart()
+                handleSidebar: this.handleSidebar,
+                handleCart: this.handleCart,
+                closeCart: this.closeCart,
+                openCart: this.openCart
             }}>
                 {this.props.children}
             </ProductContext.Provider>
