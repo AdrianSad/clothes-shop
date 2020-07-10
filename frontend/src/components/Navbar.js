@@ -47,6 +47,7 @@ const NavWrapper = styled.nav`
     justify-content: space-between;
     //max-width: 1170px;
     margin: 0 auto;
+    z-index: 1;
     }
     .nav-icon {
     font-size: 1.5rem;
