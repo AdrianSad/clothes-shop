@@ -9,7 +9,7 @@ export default function Footer() {
                 return <FooterWrapper>
                     <div className="container py-3">
                         <div className="row">
-                            <div className="col-md-6 ">
+                            <div className="col-md-6">
                                 <p className="text-capitalize">
                                     copyright &copy; clothes shop {new Date().getFullYear()}. all rights reserved
                                 </p>
