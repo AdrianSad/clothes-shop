@@ -40,7 +40,7 @@ const NavWrapper = styled.nav`
     width: 100%;
     padding: 1rem 1.5rem;
     background: var(--mainWhite);
-    box-shadow: 0 1px 18px var(--primaryColor);
+    box-shadow: 0 1px 18px 0px var(--primaryColor);
     .nav-center {
     display: flex;
     align-items: center;

@@ -20,7 +20,7 @@ class ProductProvider extends Component {
         filteredProducts: [],
         featuredProducts: [],
         singleProduct: {},
-        loading: true
+        loading: false
     };
 
     componentDidMount() {
@@ -29,6 +29,36 @@ class ProductProvider extends Component {
 
         this.setProducts(items);
     }
+
+    setProducts = (products) => {
+        let featuredProducts = items.filter(item => item.featured === true);
+
+        this.setState({
+            filteredProducts: featuredProducts,
+            featuredProducts,
+            cart: this.getStorageCart(),
+            singleProduct: this.getStorageProduct(),
+            loading: false
+        })
+    }
+
+    getStorageCart = () => {
+        return [];
+    }
+
+    getStorageProduct = () => {
+        return [];
+    }
+
+    getTotals = () => {};
+
+    addTotals = () => {};
+
+    syncStorage = () => {};
+
+    addToCart = (id) => {};
+
+    setSingleProduct = (id) => {};
 
     handleSidebar = () => {
         this.setState({sidebarOpen: !this.state.sidebarOpen})
@@ -53,7 +83,9 @@ class ProductProvider extends Component {
                 handleSidebar: this.handleSidebar,
                 handleCart: this.handleCart,
                 closeCart: this.closeCart,
-                openCart: this.openCart
+                openCart: this.openCart,
+                addToCart: this.addToCart,
+                setSingleProduct: this.setSingleProduct
             }}>
                 {this.props.children}
             </ProductContext.Provider>

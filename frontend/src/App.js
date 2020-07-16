@@ -29,7 +29,7 @@ function App() {
       <Route path="/products" exact component={Products}/>
       <Route path="/contact" exact component={Contact}/>
       <Route path="/cart" component={Cart}/>
-      <Route path="/product/:id" component={SingleProduct}/>
+      <Route path="/products/:id" component={SingleProduct}/>
       <Route component={Default}/>
     </Switch>
     <Footer/>

@@ -38,7 +38,7 @@ export const items = [
         person: "Robert",
         description: "Kurtka damska rozmiar L.Firmy Stromberg. Oddychajaca ,wodoszczelna,Wiatroszczelna ,\n" +
             "Caloroczna . Możliwa wysyłka 15 zł lub odbior osobisty",
-        featured: true,
+        featured: false,
         image: "img/image-4.jpg"
     },
     {
@@ -47,7 +47,7 @@ export const items = [
         price: 20,
         person: "Patrycja",
         description: "Bluzke ciezko zmierzyc ,bo na plasko kiepsko sie uklada. Jest na tyle elastyczna ze bedzie rowniez dobra na xxxl.",
-        featured: true,
+        featured: false,
         image: "img/image-5.jpg"
     },
     {
@@ -56,7 +56,7 @@ export const items = [
         price: 40,
         person: "Patrycja",
         description: "Dlugosc 53,pachy45,biust45,pas44 od pachy33 ,dl.rekawa 60/43 ,sz.rekawa 10 . 100% bawelna material jeansowy, kozuszek100% poliester. Rozmiar dzieciecy jednak nosila osoba w rozmiarze xxs/xs byla idealna. Prosze sugerowac sie wymiarami.",
-        featured: true,
+        featured: false,
         image: "img/image-6.jpg"
     },
 ]
