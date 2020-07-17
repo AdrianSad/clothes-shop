@@ -3,6 +3,7 @@ import {FaBars, FaCartPlus} from "react-icons/all";
 import styled from 'styled-components';
 import {ProductConsumer} from "../context";
 import logo from '../images/logo.svg';
+import {Link} from 'react-router-dom';
 
 export default function Navbar() {
     return (
@@ -15,7 +16,8 @@ export default function Navbar() {
 
                         <div className="nav-center">
                             <FaBars className="nav-icon" onClick={handleSidebar}/>
-                            <img src={logo} alt="Clothes Shop Logo"/>
+
+                            <Link to="/"><img src={logo} alt="Clothes Shop Logo"/></Link>
 
                             <div className="nav-cart">
                                 <FaCartPlus className="nav-icon" onClick={handleCart}/>
@@ -41,13 +43,13 @@ const NavWrapper = styled.nav`
     padding: 1rem 1.5rem;
     background: var(--mainWhite);
     box-shadow: 0 1px 18px 0px var(--primaryColor);
+    z-index: 1;
     .nav-center {
     display: flex;
     align-items: center;
     justify-content: space-between;
     //max-width: 1170px;
     margin: 0 auto;
-    z-index: 1;
     }
     .nav-icon {
     font-size: 1.5rem;

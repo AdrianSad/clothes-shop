@@ -10,7 +10,7 @@ const Featured = () => {
             <div className="container">
                 <Title title="featured clothes" center={true}/>
 
-                <div className="row">
+                <div className="row my-5">
                     <ProductConsumer>
                         {value => {
                             const {featuredProducts} = value;

@@ -20,7 +20,7 @@ class ProductProvider extends Component {
         filteredProducts: [],
         featuredProducts: [],
         singleProduct: {},
-        loading: false
+        loading: true
     };
 
     componentDidMount() {
@@ -31,34 +31,93 @@ class ProductProvider extends Component {
     }
 
     setProducts = (products) => {
-        let featuredProducts = items.filter(item => item.featured === true);
+        let featuredProducts = products.filter(item => item.featured === true);
 
         this.setState({
-            filteredProducts: featuredProducts,
+            filteredProducts: products,
+            storeProducts: products,
             featuredProducts,
             cart: this.getStorageCart(),
             singleProduct: this.getStorageProduct(),
             loading: false
-        })
+        }, () => {this.addTotals()})
     }
 
     getStorageCart = () => {
-        return [];
+        return localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
     }
 
     getStorageProduct = () => {
-        return [];
+        return localStorage.getItem('singleProduct') ? JSON.parse(localStorage.getItem('singleProduct')) : {};
     }
 
-    getTotals = () => {};
+    getTotals = () => {
+        let subTotal = 0;
+        let cartItems = 0;
+        this.state.cart.forEach(item => {
+            subTotal += item.price;
+            cartItems += 1;
+        })
 
-    addTotals = () => {};
+        subTotal = parseFloat(subTotal.toFixed(2));
+        let tax = subTotal * 0.23;
+        tax = parseFloat(tax.toFixed(2));
+        let total = subTotal + tax;
+        total = parseFloat(total.toFixed(2));
 
-    syncStorage = () => {};
+        return {
+            cartItems,
+            subTotal,
+            tax,
+            total
+        }
+    };
 
-    addToCart = (id) => {};
+    addTotals = () => {
+        const totals = this.getTotals();
+        this.setState({
+            cartItems: totals.cartItems,
+            cartSubTotal: totals.subTotal,
+            cartTax: totals.tax,
+            cartTotal: totals.total
+            })
+    };
 
-    setSingleProduct = (id) => {};
+    syncStorage = () => {
+        localStorage.setItem('cart', JSON.stringify(this.state.cart))
+    };
+
+    addToCart = (id) => {
+        let tempCart = [...this.state.cart];
+        let tempProducts = [...this.state.storeProducts];
+        let tempItem = tempCart.find(item => item.id === id);
+
+        if(!tempItem){
+            tempItem = tempProducts.find(item => item.id === id);
+            let cartItem = {...tempItem};
+            tempCart = [...tempCart, cartItem];
+        } else {
+            tempCart = tempCart.filter(item => item.id !== id)
+        }
+
+        this.setState(() => {
+            return {cart: tempCart}
+        }, ()=> {
+            this.addTotals();
+            this.syncStorage();
+            this.openCart();
+        })
+    };
+
+    setSingleProduct = (id) => {
+        let product = this.state.storeProducts.find(item => item.id === id);
+
+        localStorage.setItem('singleProduct', JSON.stringify(product));
+        this.setState({
+            singleProduct: {...product},
+            loading: false
+            })
+    };
 
     handleSidebar = () => {
         this.setState({sidebarOpen: !this.state.sidebarOpen})

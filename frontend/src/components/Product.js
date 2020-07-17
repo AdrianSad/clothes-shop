@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
-import {FaSearch, FaCartPlus} from "react-icons/fa";
+import {FaSearchPlus, FaCartPlus} from "react-icons/fa";
 import {ProductConsumer} from "../context";
 
 export default function Product({product}){
@@ -20,7 +20,7 @@ export default function Product({product}){
                         <div className="product-icons">
                             <Link to={`/products/${product.id}`}
                                   onClick={() => setSingleProduct(product.id)}>
-                                <FaSearch className="icon"/>
+                                <FaSearchPlus className="icon"/>
                             </Link>
 
                             <FaCartPlus className="icon" onClick={() => addToCart(product.id)}/>
