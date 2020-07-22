@@ -135,6 +135,29 @@ class ProductProvider extends Component {
         this.setState({cartOpen: true})
     };
 
+    removeItem = (id) => {
+        let tempCart = [...this.state.cart];
+        tempCart = tempCart.filter(item => item.id !== id);
+        this.setState({
+            cart: [...tempCart]
+        },
+            () => {
+                this.addTotals();
+                this.syncStorage();
+        })
+
+    };
+
+    clearCart = () => {
+        this.setState({
+            cart:[]
+        },
+            () => {
+                this.addTotals();
+                this.syncStorage();
+            })
+    };
+
     render() {
         return (
             <ProductContext.Provider value={{
@@ -144,7 +167,9 @@ class ProductProvider extends Component {
                 closeCart: this.closeCart,
                 openCart: this.openCart,
                 addToCart: this.addToCart,
-                setSingleProduct: this.setSingleProduct
+                setSingleProduct: this.setSingleProduct,
+                removeItem: this.removeItem,
+                clearCart: this.clearCart
             }}>
                 {this.props.children}
             </ProductContext.Provider>

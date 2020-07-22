@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
-import {FaSearchPlus, FaCartPlus} from "react-icons/fa";
+import {FaSearchPlus, FaCartPlus, FaStar} from "react-icons/fa";
 import {ProductConsumer} from "../context";
 
 export default function Product({product}){
@@ -9,7 +9,7 @@ export default function Product({product}){
         {value => {
             const {addToCart, setSingleProduct} = value;
             return (
-                <ProductWrapper className="col-10 mx-auto col-sm-8 col-md-6 col-lg-4 my-3">
+                <ProductWrapper featured={product.featured} className="col-10 mx-auto col-sm-8 col-md-6 col-lg-4 my-3">
                     <div className="card">
 
                         <div className="img-container">
@@ -29,6 +29,13 @@ export default function Product({product}){
                             <p className="mb-0">{product.title}</p>
                             <p className="mb-0 text-main text-price">{product.price} zł</p>
                         </div>
+
+                        {product.featured ?
+                            <p className="feature-text">
+                                Featured
+                            </p> : ""
+                        }
+
                     </div>
                 </ProductWrapper>
             )
@@ -51,6 +58,17 @@ transform: scale(1.05);
 
 .img-container{
 position: relative;
+}
+
+.feature-text{
+position: absolute;
+text-align: center;
+top: 0;
+left: 0;
+padding: 0.5rem 0.5rem;
+font-size: 1.25rem;
+color: var(--mainWhite);
+background: rgba(236,151,6,0.5);
 }
 
 .product-icons{

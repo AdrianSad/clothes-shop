@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montaga&family=Open+Sans:wght@700&display=swap');
 
 :root{
-  --primaryColor: #EC9706;
+  --primaryColor: #ec9706;
   --primaryColorDark: #c18308;
   --primaryRGBA: rgba(0,0,0,0.3);
   --mainGrey: #fafafa;
@@ -47,4 +47,8 @@ body{
   text-decoration: none;
   color: var(--primaryColor);
   outline-color: var(--primaryColorDark);
+}
+
+.cart-icon {
+  cursor: pointer;
 }
