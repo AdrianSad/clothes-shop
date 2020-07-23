@@ -10,7 +10,9 @@ export const items = [
             "Biodra 128-130\n" +
             "Długość 130\n" +
             "Biceps 38\n",
+        size: "XL",
         featured: true,
+        freeShipping: true,
         image: "img/image-1.jpg"
     },
     {
@@ -19,7 +21,9 @@ export const items = [
         price: 36,
         person: "Lidka",
         description: "Sprzedam piekna sukienke, jest przewiewna z naturalnego materialu o pieknych kolorach. Dlugosc za kolana przy 170 cm wzrostu, fajny dekolt. Stan oceniam na b. dobry.",
+        size: "S",
         featured: true,
+        freeShipping: true,
         image: "img/image-2.jpg"
     },
     {
@@ -27,8 +31,10 @@ export const items = [
         title: "Sweter męski 100% wełny merynosa xxl",
         price: 30,
         person: "Joanna",
+        size: "XXL",
         description: "Mam do sprzedania sweter z 100% welny merynosa. Rozmiar xxl. Wysylka: 10 zl",
         featured: true,
+        freeShipping: false,
         image: "img/image-3.jpg"
     },
     {
@@ -38,7 +44,9 @@ export const items = [
         person: "Robert",
         description: "Kurtka damska rozmiar L.Firmy Stromberg. Oddychajaca ,wodoszczelna,Wiatroszczelna ,\n" +
             "Caloroczna . Możliwa wysyłka 15 zł lub odbior osobisty",
+        size: "L",
         featured: false,
+        freeShipping: false,
         image: "img/image-4.jpg"
     },
     {
@@ -47,7 +55,9 @@ export const items = [
         price: 20,
         person: "Patrycja",
         description: "Bluzke ciezko zmierzyc ,bo na plasko kiepsko sie uklada. Jest na tyle elastyczna ze bedzie rowniez dobra na xxxl.",
+        size: "XXL",
         featured: false,
+        freeShipping: false,
         image: "img/image-5.jpg"
     },
     {
@@ -56,7 +66,9 @@ export const items = [
         price: 40,
         person: "Patrycja",
         description: "Dlugosc 53,pachy45,biust45,pas44 od pachy33 ,dl.rekawa 60/43 ,sz.rekawa 10 . 100% bawelna material jeansowy, kozuszek100% poliester. Rozmiar dzieciecy jednak nosila osoba w rozmiarze xxs/xs byla idealna. Prosze sugerowac sie wymiarami.",
+        size: "XS",
         featured: false,
+        freeShipping: false,
         image: "img/image-6.jpg"
     },
 ]
