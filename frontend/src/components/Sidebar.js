@@ -27,7 +27,7 @@ export default function Sidebar() {
 
 const SideWrapper = styled.nav`
   position: fixed;
-  top: 60px;
+  top: 83px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -35,6 +35,7 @@ const SideWrapper = styled.nav`
   z-index: 1;
   transition: var(--mainTransition);
   transform: ${props => props.show ? 'translateX(0)' : 'translateX(-100%)'};
+  box-shadow: ${props => props.show ? '-1px 15px 18px 0px var(--primaryColor)' : '0'};
   ul {
   list-style-type: none;
   padding: 0 !important;

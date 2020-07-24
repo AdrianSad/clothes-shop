@@ -36,15 +36,15 @@ export default function SideCart() {
 
 const CartWrapper = styled.div`
 position: fixed;
-top: 60px;
+top: 83px;
 right: 0;
 width: 100%;
 height: 100%;
 background: var(--mainWhite);
+box-shadow: ${props => props.show ? '-1px 15px 18px 0px var(--primaryColor)' : '0'};
 z-index: 1;
 transform: ${props => props.show ? 'translateX(0)' : 'translateX(100%)'};
 transition: var(--mainTransition);
-
 @media (min-width: 576px){
 width: 25rem;
 }

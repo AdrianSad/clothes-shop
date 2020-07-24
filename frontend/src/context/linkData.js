@@ -12,7 +12,7 @@ export const linkData = [
     {
         id: 3,
         text: 'clothes',
-        path: '/clothes'
+        path: '/products'
     },
     {
         id: 4,
@@ -20,7 +20,7 @@ export const linkData = [
         path: '/contact'
     },
     {
-        id: 4,
+        id: 5,
         text: 'cart',
         path: '/cart'
     },
