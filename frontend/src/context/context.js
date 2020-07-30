@@ -26,11 +26,18 @@ class ProductProvider extends Component {
         min: 0,
         max: 0,
         size: "ALL",
-        shipping: false
+        shipping: false,
     };
 
     componentDidMount() {
 
+        // const url = "/api/products";
+        //
+        // fetch(url)
+        //     .then(response => response.json())
+        //     .then(json => {
+        //         console.log(json);
+        //     });
 
         this.setProducts(items);
     }
@@ -142,6 +149,10 @@ class ProductProvider extends Component {
         this.setState({cartOpen: false})
     };
 
+    closeSidebar = () => {
+        this.setState({sidebarOpen: false})
+    };
+
     openCart = () => {
         this.setState({cartOpen: true})
     };
@@ -216,13 +227,14 @@ class ProductProvider extends Component {
                 ...this.state,
                 handleSidebar: this.handleSidebar,
                 handleCart: this.handleCart,
+                closeSidebar: this.closeSidebar,
                 closeCart: this.closeCart,
                 openCart: this.openCart,
                 addToCart: this.addToCart,
                 setSingleProduct: this.setSingleProduct,
                 removeItem: this.removeItem,
                 clearCart: this.clearCart,
-                handleChange: this.handleChange
+                handleChange: this.handleChange,
             }}>
                 {this.props.children}
             </ProductContext.Provider>

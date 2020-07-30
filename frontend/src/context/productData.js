@@ -4,12 +4,7 @@ export const items = [
         title: "Sukienka plus size 42-50",
         price: 85,
         user: "Patrycja",
-        description: "Przepiękna sukienka zakupiona w tym miesiącu w sklepie butik na plus. Niestety okazała się zbyt obszerna, a paragon gdzieś zaginął. Zakupiona za ok. 160 zł. Z aktualnej kolekcji, z tego względu też cena sukienki nie podlega negocjacji. Piękna, letnia, w delikatny wzór kwiatów. Można nosić ją z paskiem lub bez.\n" +
-            "\n" +
-            "Biust 118-130\n" +
-            "Biodra 128-130\n" +
-            "Długość 130\n" +
-            "Biceps 38\n",
+        description: "Przepiękna sukienka zakupiona w tym miesiącu w sklepie butik na plus. Niestety okazała się zbyt obszerna, a paragon gdzieś zaginął. Zakupiona za ok. 160 zł. Z aktualnej kolekcji, z tego względu też cena sukienki nie podlega negocjacji. Piękna, letnia, w delikatny wzór kwiatów. Można nosić ją z paskiem lub bez.Biust 118-130 Biodra 128-130 Długość 130 Biceps 38",
         size: "XL",
         featured: true,
         freeShipping: true,
