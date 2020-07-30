@@ -1,6 +1,7 @@
 package pl.adrian.clothesshop.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.adrian.clothesshop.models.Product;
 import pl.adrian.clothesshop.models.User;
 import pl.adrian.clothesshop.repositories.ProductRepository;
@@ -36,5 +37,11 @@ public class ProductServiceImpl implements ProductService{
         } else {
             throw new RuntimeException("Product Not Found");
         }
+    }
+
+    @Override
+    @Transactional
+    public void addProduct(Product product) {
+        productRepository.save(product);
     }
 }

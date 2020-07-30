@@ -44,6 +44,14 @@ public class Product implements Serializable {
     private Boolean freeShipping;
 
     @Lob
-    @Column(name = "image")
-    private Byte[] image;
+    @Column(name = "main_image")
+    private Byte[] main_image;
+
+    @Lob
+    @Column(name = "image2")
+    private Byte[] image2;
+
+    @Lob
+    @Column(name = "image3")
+    private Byte[] image3;
 }

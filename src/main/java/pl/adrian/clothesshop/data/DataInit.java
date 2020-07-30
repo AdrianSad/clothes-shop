@@ -7,7 +7,6 @@ import pl.adrian.clothesshop.repositories.ProductRepository;
 
 import java.math.BigDecimal;
 
-@Component
 public class DataInit implements CommandLineRunner {
 
     private final ProductRepository productRepository;

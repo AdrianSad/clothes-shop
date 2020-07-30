@@ -1,0 +1,40 @@
+DROP TABLE IF EXISTS products;
+
+CREATE TABLE users
+(
+    id INTEGER IDENTITY PRIMARY KEY,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(80) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    UNIQUE (email)
+);
+
+CREATE TABLE products
+(
+id INTEGER IDENTITY PRIMARY KEY,
+title VARCHAR(80) NOT NULL,
+price FLOAT(2) NOT NULL,
+user_id INTEGER NOT NULL,
+description TEXT NOT NULL,
+size VARCHAR(4),
+featured BOOLEAN NOT NULL,
+freeShipping BOOLEAN NOT NULL,
+main_image LONGBLOB,
+image2 LONGBLOB,
+image3 LONGBLOB
+);
+
+CREATE TABLE user_roles
+(
+    id INTEGER IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    UNIQUE (name)
+);
+
+CREATE TABLE users_roles
+(
+    userID INTEGER NOT NULL,
+    roleID INTEGER NOT NULL
+);

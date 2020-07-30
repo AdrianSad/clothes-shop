@@ -7,6 +7,7 @@ import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -39,5 +40,5 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 }
