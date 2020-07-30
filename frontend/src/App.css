@@ -45,7 +45,7 @@ body{
 .main-link:hover {
   background: var(--primaryColorDark);
   text-decoration: none;
-  color: var(--primaryColor);
+  color: var(--mainGrey);
   outline-color: var(--primaryColorDark);
 }
 
