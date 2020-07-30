@@ -3,45 +3,83 @@ import styled from "styled-components";
 import {Link} from 'react-router-dom';
 import {FaSearchPlus, FaCartPlus, FaStar} from "react-icons/fa";
 import {ProductConsumer} from "../context";
+import {Lightbox} from "react-modal-image";
+import * as PropTypes from "prop-types";
 
-export default function Product({product}){
-    return <ProductConsumer>
-        {value => {
-            const {addToCart, setSingleProduct} = value;
-            return (
-                <ProductWrapper featured={product.featured} className="col-10 mx-auto col-sm-8 col-md-6 col-lg-4 my-3">
-                    <div className="card">
+export default class Product extends Component {
+    constructor(props) {
+        super(props);
 
-                        <div className="img-container">
-                            <img src={product.image} className="card-img-top" alt="product image"
-                            style={{height: '320px'}}/>
-                        </div>
+        this.state = {
+            open: false
+        };
+    }
 
-                        <div className="product-icons">
-                            <Link to={`/products/${product.id}`}
-                                  onClick={() => setSingleProduct(product.id)}>
-                                <FaSearchPlus className="icon"/>
-                            </Link>
+    closeLightbox = () => {
+        this.setState({
+            open:false
+        });
+    };
 
-                            <FaCartPlus className="icon" onClick={() => addToCart(product.id)}/>
-                        </div>
-                        <div className="card-body d-flex justify-content-between">
-                            <p className="mb-0">{product.title}</p>
-                            <p className="mb-0 text-main text-price">{product.price} zł</p>
-                        </div>
+    render() {
+        let {product} = this.props;
 
-                        {product.featured ?
-                            <p className="feature-text">
-                                Featured
-                            </p> : ""
-                        }
+        return <ProductConsumer>
+            {value => {
+                const {addToCart, setSingleProduct} = value;
 
-                    </div>
-                </ProductWrapper>
-            )
-        }}
-    </ProductConsumer>
+                return (
+                    <>
+                        {this.state.open && (
+                            <Lightbox
+                                large={product.image}
+                                alt={product.title}
+                                hideZoom={true}
+                                hideDownload={true}
+                                onClose={this.closeLightbox}
+                            />
+                        )}
+
+                        <ProductWrapper featured={product.featured}
+                                        className="col-10 mx-auto col-sm-8 col-md-6 col-lg-4 my-3 px-4">
+                            <div className="card">
+
+                                <div className="img-container">
+                                    <Link to={`/products/${product.id}`}
+                                          onClick={() => setSingleProduct(product.id)}>
+                                        <img src={product.image} className="card-img-top" alt="product image"
+                                             style={{height: '320px'}}/>
+
+                                    </Link>
+                                </div>
+
+                                <div className="product-icons">
+
+                                    <FaSearchPlus className="icon" onClick={() => this.setState({open: true})}/>
+
+                                    <FaCartPlus className="icon" onClick={() => addToCart(product.id)}/>
+                                </div>
+                                <div className="card-body d-flex justify-content-between">
+                                    <p className="mb-0">{product.title}</p>
+                                    <p className="mb-0 text-main text-price">{product.price} zł</p>
+                                </div>
+
+                                {product.featured ?
+                                    <p className="feature-text">
+                                        Featured
+                                    </p> : ""
+                                }
+
+                            </div>
+                        </ProductWrapper>
+                    </>
+                )
+            }}
+        </ProductConsumer>
+    }
 };
+
+Product.propTypes = {product: PropTypes.any}
 
 const ProductWrapper = styled.div`
 
@@ -69,6 +107,7 @@ padding: 0.5rem 0.5rem;
 font-size: 1.25rem;
 color: var(--mainWhite);
 background: rgba(236,151,6,0.5);
+border-bottom-right-radius: 0.5rem;
 }
 
 .product-icons{
