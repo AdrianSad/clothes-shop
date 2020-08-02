@@ -1,12 +1,13 @@
-INSERT INTO users(id, first_name, last_name, email, password, phone) VALUES (1, 'Adrian', 'Sadurski', 'admin@example.com', '$2y$12$29I3hHm6hAV0GrPYU8NHxOwAmNFjOvLb7V2bNCLQCq3eZHRFlp4Ge', '123456789');
-INSERT INTO users(id, first_name, last_name, email, password, phone) VALUES (2, 'Jan', 'Kowalski', 'jan@example.com', '$2y$12$29I3hHm6hAV0GrPYU8NHxOwAmNFjOvLb7V2bNCLQCq3eZHRFlp4Ge', '123456789');
+INSERT INTO users(user_id, username, email, password, phone) VALUES (1, 'Adrian', 'admin@example.com', '$2y$12$29I3hHm6hAV0GrPYU8NHxOwAmNFjOvLb7V2bNCLQCq3eZHRFlp4Ge', '123456789');
+INSERT INTO users(user_id, username, email, password, phone) VALUES (2, 'Jan', 'jan@example.com', '$2y$12$29I3hHm6hAV0GrPYU8NHxOwAmNFjOvLb7V2bNCLQCq3eZHRFlp4Ge', '123456789');
 
-INSERT INTO user_roles(id, name) VALUES (1, 'ROLE_ADMIN');
-INSERT INTO user_roles(id, name) VALUES (2, 'ROLE_CUSTOMER');
+INSERT INTO roles(role_id, name) VALUES (1, 'ROLE_USER');
+INSERT INTO roles(role_id, name) VALUES (2, 'ROLE_MODERATOR');
+INSERT INTO roles(role_id, name) VALUES (3, 'ROLE_ADMIN');
 
-INSERT INTO users_roles(userID, roleID) VALUES (1,1);
-INSERT INTO users_roles(userID, roleID) VALUES (2,2);
-INSERT INTO users_roles(userID, roleID) VALUES (1,2);
+INSERT INTO users_roles(user_id, role_id) VALUES (1,1);
+INSERT INTO users_roles(user_id, role_id) VALUES (2,1);
+INSERT INTO users_roles(user_id, role_id) VALUES (1,3);
 
 INSERT INTO products(id, title, price, user_id, description, size, featured, freeShipping) VALUES (1, 'Sukienka plus size 42-50', 85, 2, 'Przepiękna sukienka zakupiona w tym miesiącu w sklepie butik na plus. Niestety okazała się zbyt obszerna, a paragon gdzieś zaginął. Zakupiona za ok. 160 zł. Z aktualnej kolekcji, z tego względu też cena sukienki nie podlega negocjacji. Piękna, letnia, w delikatny wzór kwiatów. Można nosić ją z paskiem lub bez.Biust 118-130 Biodra 128-130 Długość 130 Biceps 38', 'XL', true, true);
 INSERT INTO products(id, title, price, user_id, description, size, featured, freeShipping) VALUES (2, 'Sukienka Tatuum S 36 piękne kolory', 36, 2, 'Sprzedam piekna sukienke, jest przewiewna z naturalnego materialu o pieknych kolorach. Dlugosc za kolana przy 170 cm wzrostu, fajny dekolt. Stan oceniam na b. dobry.', 'S', true, true);

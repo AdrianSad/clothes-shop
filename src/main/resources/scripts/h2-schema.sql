@@ -2,13 +2,13 @@ DROP TABLE IF EXISTS products;
 
 CREATE TABLE users
 (
-    id INTEGER IDENTITY PRIMARY KEY,
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
+    user_id INTEGER IDENTITY PRIMARY KEY,
+    username VARCHAR(30) NOT NULL,
     email VARCHAR(50) NOT NULL,
     password VARCHAR(80) NOT NULL,
-    phone VARCHAR(15) NOT NULL,
-    UNIQUE (email)
+    phone VARCHAR(15),
+    UNIQUE (email),
+    UNIQUE (username)
 );
 
 CREATE TABLE products
@@ -26,15 +26,15 @@ image2 LONGBLOB,
 image3 LONGBLOB
 );
 
-CREATE TABLE user_roles
+CREATE TABLE roles
 (
-    id INTEGER IDENTITY PRIMARY KEY,
-    name VARCHAR(64) NOT NULL,
+    role_id INTEGER IDENTITY PRIMARY KEY,
+    name VARCHAR(32) NOT NULL,
     UNIQUE (name)
 );
 
 CREATE TABLE users_roles
 (
-    userID INTEGER NOT NULL,
-    roleID INTEGER NOT NULL
+    user_id INTEGER NOT NULL,
+    role_id INTEGER NOT NULL
 );
