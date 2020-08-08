@@ -18,7 +18,7 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "title")
@@ -27,8 +27,8 @@ public class Product implements Serializable {
     @Column(name = "price")
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
+    @Column(name = "user_id")
+    private Long user_id;
 
     @Lob
     @Column(name = "description")
@@ -40,18 +40,22 @@ public class Product implements Serializable {
     @Column(name = "featured")
     private Boolean featured;
 
-    @Column(name = "freeShipping")
-    private Boolean freeShipping;
+    @Column(name = "free_shipping")
+    private Boolean free_shipping;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="order_id")
+    private Order order;
 
     @Lob
     @Column(name = "main_image")
-    private Byte[] main_image;
+    private byte[] main_image;
 
     @Lob
     @Column(name = "image2")
-    private Byte[] image2;
+    private byte[] image2;
 
     @Lob
     @Column(name = "image3")
-    private Byte[] image3;
+    private byte[] image3;
 }

@@ -54,10 +54,6 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<UserRole> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private Set<Product> products = new HashSet<>();
 
     public User(String username, String email, String password){
         this.username = username;
