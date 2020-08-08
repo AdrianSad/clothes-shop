@@ -1,57 +1,87 @@
 import React from "react";
 import {FaBars, FaCartPlus} from "react-icons/all";
 import styled from 'styled-components';
-import {ProductConsumer} from "../context";
 import logo from '../images/logo.svg';
-import {Link} from 'react-router-dom';
+import {BrowserRouter as Router, Link} from 'react-router-dom';
+import {CartConsumer} from "../context/CartContext";
+import {UserConsumer} from "../context/UserContext";
+import {getCurrentUser} from "../api/user";
+import {logout} from "../api/user";
 
-export default function Navbar({hidden}) {
+export default function Navbar() {
     return (
-        <ProductConsumer>
+        <CartConsumer>
             {value => {
-                const {cartItems, handleSidebar, handleCart, links, cartOpen, sidebarOpen} = value;
+                const {cartItems, handleSidebar, handleCart, hidden} = value;
 
                 return (
-                    <NavWrapper hide={hidden || cartOpen || sidebarOpen}>
+                <UserConsumer>
+                    {valueUser => {
 
-                        {hidden || cartOpen || sidebarOpen ?
-                            <div className="nav-center">
+                        const {showModal, userLogout, user} = valueUser;
 
-                                <FaBars className="nav-icon" onClick={handleSidebar}/>
+                        return (
+                            <NavWrapper hide={hidden}>
 
-                                <Link to="/"><img className="nav-logo" src={logo} alt="Clothes Shop Logo"/></Link>
+                                {hidden ?
+                                    <div className="nav-center">
 
-                                <div className="nav-cart">
-                                    <FaCartPlus className="nav-icon" onClick={handleCart}/>
-                                    <div className="cart-items">
-                                        {cartItems}
+                                        <FaBars className="nav-icon" onClick={handleSidebar}/>
+
+                                        <Link to="/"><img src={logo}
+                                                          alt="Clothes Shop Logo"/></Link>
+
+                                        <div className="nav-cart">
+                                            <FaCartPlus className="nav-icon" onClick={handleCart}/>
+                                            <div className="cart-items">
+                                                {cartItems}
+                                            </div>
+                                        </div>
+
                                     </div>
-                                </div>
 
-                            </div>
+                                    :
+                                    <ul>
+                                        <li>
+                                            <Link to="/" className="nav-link">
+                                                home
+                                            </Link>
+                                        </li>
 
-                            :
-                            <ul>
-                                {links.map(link => link.id !== 3 ? (
-                                        <li key={link.id}>
-                                            <Link to={link.path} className="nav-link">
-                                                {link.text}
-                                                {link.id === 5 &&
+                                        <li>
+                                            <Link to="/contact" className="nav-link">
+                                                contact
+                                            </Link>
+                                        </li>
+
+                                        <Link to="/"><img className="nav-logo" src={logo}
+                                                          alt="Clothes Shop Logo"/></Link>
+                                        <li>
+                                            { user.token
+                                                ? <a className="login-btn" onClick={userLogout}> Logout </a>
+                                                    : <a className="login-btn" onClick={showModal}> Login </a>
+                                            }
+                                        </li>
+
+                                        <li>
+                                            <Link to="/cart" className="nav-link">
+                                                cart
                                                 <div className="text-cart">
                                                     {cartItems}
-                                                </div>}
+                                                </div>
                                             </Link>
-
                                         </li>
-                                    ) :
-                                    <Link to="/"><img className="nav-logo" src={logo} alt="Clothes Shop Logo"/></Link>
-                                )}
-                            </ul>
-                        }
-                    </NavWrapper>
+
+                                    </ul>
+                                }
+                            </NavWrapper>
+                        );
+                    }}
+                </UserConsumer>
                 );
             }}
-        </ProductConsumer>
+
+        </CartConsumer>
     );
 }
 
@@ -60,11 +90,11 @@ const NavWrapper = styled.nav`
     position:  fixed;
     top: 0;
     width: 100%;
-    padding: ${props => (props.hide ? "1rem 1.5rem" : "1.5rem 3rem")};
+    padding: ${props => (props.hide ? "1rem 1.5rem" : "1.2rem 6rem")};
     transition: var(--mainTransition);
     background: var(--mainWhite);
     box-shadow: 0 1px 18px 0px var(--primaryColor);
-    z-index: 1;
+    z-index: 2;
     .nav-center {
     display: flex;
     align-items: center;
@@ -72,6 +102,17 @@ const NavWrapper = styled.nav`
     //max-width: 1170px;
     margin: 0 auto;
     }
+
+    .nav-logo{
+    padding-right: 2rem;
+    }
+    
+    @media screen and (max-width: 600px) {
+    .nav-logo img {
+    display: none;
+    }
+    }
+
     .nav-icon {
     font-size: 1.5rem;
     cursor: pointer;
@@ -122,6 +163,19 @@ const NavWrapper = styled.nav`
     font-size: 0.9rem;
     border-radius: 50%;
     display: inline;
+    }
+    
+    .login-btn{
+     background: transparent;
+     border: none;
+     font-size: 1.5rem;
+     text-transform: capitalize;
+     transition: var(--mainTransition);
+    }
+    
+    .login-btn:hover{
+      color: var(--primaryColor);
+      cursor: pointer;
     }
 
     `;

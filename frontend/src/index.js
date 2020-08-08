@@ -3,18 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter as Router} from 'react-router-dom';
-import {ProductProvider} from "./context";
+import {ProductProvider} from "./context/ProductsContext";
+import {CartProvider} from "./context/CartContext";
+import {UserProvider} from "./context/UserContext";
 
 ReactDOM.render(
     <React.StrictMode>
         <ProductProvider>
-            <Router>
-                <App/>
-            </Router>
+            <CartProvider>
+                <UserProvider>
+                    <App/>
+                </UserProvider>
+            </CartProvider>
         </ProductProvider>
-    </React.StrictMode>,
-    document.getElementById('root')
+    </React.StrictMode>
+,
+document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

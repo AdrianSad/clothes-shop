@@ -1,15 +1,20 @@
 import React from 'react';
-import {ProductConsumer} from "../../context";
+import {ProductConsumer} from "../../context/ProductsContext";
 import styled from "styled-components";
 import Title from "../Title";
 import Product from "../Product";
 import ProductFilter from "./ProductFilter";
+import Loading from "../Loading";
 
 function Products() {
     return (
         <ProductConsumer>
             {value => {
-                const {filteredProducts} = value;
+                const {filteredProducts, loading} = value;
+
+                if(loading){
+                    return <Loading/>
+                } else {
 
                 return <section className="py-5">
                     <div className="container">
@@ -40,9 +45,10 @@ function Products() {
 
                     </div>
                 </section>
-            }}
+            }}}
         </ProductConsumer>
     );
+
 }
 
 export default Products;

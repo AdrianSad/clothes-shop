@@ -1,13 +1,13 @@
 import React from 'react';
 import CartItem from "./CartItem";
-import {ProductConsumer} from "../../context";
+import {CartConsumer} from "../../context/CartContext";
 
 const CartList = () => {
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col">
-                    <ProductConsumer>
+                    <CartConsumer>
                         {value => {
                             const {cart, removeItem} = value;
 
@@ -21,7 +21,7 @@ const CartList = () => {
                                 {cart.map(item => (<CartItem key={item.id} cartItem={item} removeItem={removeItem}/>))}
                             </>
                         }}
-                    </ProductConsumer>
+                    </CartConsumer>
                 </div>
             </div>
         </div>

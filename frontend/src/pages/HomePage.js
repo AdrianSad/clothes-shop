@@ -1,5 +1,5 @@
 import React from "react";
-import {ProductConsumer} from "../context";
+import {ProductConsumer} from "../context/ProductsContext";
 import Hero from "../components/Hero";
 import {Link} from 'react-router-dom';
 import Services from '../components/HomePage/Services';

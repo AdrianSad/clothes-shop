@@ -1,23 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
-import {ProductConsumer} from "../../context";
+import {ProductConsumer} from "../../context/ProductsContext";
+import {sizes} from "../../context/sizes";
 
 const ProductFilter = () => {
     return (
         <ProductConsumer>
             {value => {
                 const {search, min, max, price, size, shipping, handleChange} = value;
-
-                let sizes = new Set();
-                sizes.add("ALL");
-                sizes.add("XS");
-                sizes.add("S");
-                sizes.add("M");
-                sizes.add("L");
-                sizes.add("XL");
-                sizes.add("XXL");
-
-                sizes = [...sizes];
 
                 return (
                     <div className="row my-5">
@@ -41,6 +31,7 @@ const ProductFilter = () => {
                                             value={size}>
                                         {
                                             sizes.map((size, index) => {
+                                                console.log(size, index);
                                                 return <option key={index} value={size}>{size}</option>
                                             })
                                         }

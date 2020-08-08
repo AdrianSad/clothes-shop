@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
 import {FaSearchPlus, FaCartPlus, FaStar} from "react-icons/fa";
-import {ProductConsumer} from "../context";
+import {ProductConsumer} from "../context/ProductsContext";
 import {Lightbox} from "react-modal-image";
 import * as PropTypes from "prop-types";
+import {CartConsumer} from "../context/CartContext";
 
 export default class Product extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class Product extends Component {
 
     closeLightbox = () => {
         this.setState({
-            open:false
+            open: false
         });
     };
 
@@ -26,53 +27,62 @@ export default class Product extends Component {
 
         return <ProductConsumer>
             {value => {
-                const {addToCart, setSingleProduct} = value;
+                const {setSingleProduct} = value;
 
                 return (
-                    <>
-                        {this.state.open && (
-                            <Lightbox
-                                large={product.image}
-                                alt={product.title}
-                                hideZoom={true}
-                                hideDownload={true}
-                                onClose={this.closeLightbox}
-                            />
-                        )}
+                    <CartConsumer>
+                        {cartValue => {
+                            const {addToCart} = cartValue;
 
-                        <ProductWrapper featured={product.featured}
-                                        className="col-10 mx-auto col-sm-8 col-md-6 col-lg-4 my-3 px-4">
-                            <div className="card">
+                            return (
+                                <>
+                                    {this.state.open && (
+                                        <Lightbox
+                                            large={product.image}
+                                            alt={product.title}
+                                            hideZoom={true}
+                                            hideDownload={true}
+                                            onClose={this.closeLightbox}
+                                        />
+                                    )}
 
-                                <div className="img-container">
-                                    <Link to={`/products/${product.id}`}
-                                          onClick={() => setSingleProduct(product.id)}>
-                                        <img src={product.image} className="card-img-top" alt="product image"
-                                             style={{height: '320px'}}/>
+                                    <ProductWrapper featured={product.featured}
+                                                    className="col-10 mx-auto col-sm-8 col-md-6 col-lg-4 my-3 px-4">
+                                        <div className="card">
 
-                                    </Link>
-                                </div>
+                                            <div className="img-container">
+                                                <Link to={`/products/${product.id}`}>
+                                                    <img src={product.image} className="card-img-top"
+                                                         alt="product image"
+                                                         style={{height: '320px'}}/>
 
-                                <div className="product-icons">
+                                                </Link>
+                                            </div>
 
-                                    <FaSearchPlus className="icon" onClick={() => this.setState({open: true})}/>
+                                            <div className="product-icons">
 
-                                    <FaCartPlus className="icon" onClick={() => addToCart(product.id)}/>
-                                </div>
-                                <div className="card-body d-flex justify-content-between">
-                                    <p className="mb-0">{product.title}</p>
-                                    <p className="mb-0 text-main text-price">{product.price} zł</p>
-                                </div>
+                                                <FaSearchPlus className="icon"
+                                                              onClick={() => this.setState({open: true})}/>
 
-                                {product.featured ?
-                                    <p className="feature-text">
-                                        Featured
-                                    </p> : ""
-                                }
+                                                <FaCartPlus className="icon" onClick={() => addToCart(product)}/>
+                                            </div>
+                                            <div className="card-body d-flex justify-content-between">
+                                                <p className="mb-0">{product.title}</p>
+                                                <p className="mb-0 text-main text-price">{product.price} zł</p>
+                                            </div>
 
-                            </div>
-                        </ProductWrapper>
-                    </>
+                                            {product.featured ?
+                                                <p className="feature-text">
+                                                    Featured
+                                                </p> : ""
+                                            }
+
+                                        </div>
+                                    </ProductWrapper>
+                                </>
+                            )
+                        }}
+                    </CartConsumer>
                 )
             }}
         </ProductConsumer>

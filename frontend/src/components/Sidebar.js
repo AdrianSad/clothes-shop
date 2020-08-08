@@ -1,11 +1,11 @@
 import React from "react";
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
-import {ProductConsumer} from "../context";
+import {CartConsumer} from "../context/CartContext";
 
 export default function Sidebar() {
     return (
-        <ProductConsumer>
+        <CartConsumer>
             {value => {
                 const {links, sidebarOpen, handleSidebar} = value;
 
@@ -21,7 +21,7 @@ export default function Sidebar() {
                     </ul>
                 </SideWrapper>
             }}
-        </ProductConsumer>
+        </CartConsumer>
     )
 }
 

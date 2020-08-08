@@ -2,23 +2,35 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import Hero from '../components/Hero';
 import cartBG from '../images/cartBG.jpg';
-import {ProductConsumer} from "../context";
+import {ProductConsumer} from "../context/ProductsContext";
+import Loading from "../components/Loading";
+import {useParams} from 'react-router-dom';
+import {CartConsumer} from "../context/CartContext";
 
-export default function SingleProductPage() {
+export default function SingleProductPage(){
+
+    const {id} = useParams();
+
+
     return (
         <>
             <Hero img={cartBG} title="product details"/>
             <ProductConsumer>
                 {value => {
-                    const {singleProduct, addToCart, loading} = value;
+                    const {storeProducts, loading} = value;
+                    const singleProduct = storeProducts.find(item => item.id === parseInt(id));
 
                     if(loading){
+                        return <Loading/>
+                    } else {
 
-                    }
+                    const {user, description, price, title, size, image} = singleProduct;
 
-                    const {user, description, id, price, title, size, image} = singleProduct;
+                    return <CartConsumer>{valueCart => {
 
-                    return <section className="py-5">
+                        const {addToCart} = valueCart;
+
+                        return <section className="py-5">
                         <div className="container">
                             <div className="row">
 
@@ -34,14 +46,15 @@ export default function SingleProductPage() {
                                     <p className="text-capitalize text-title mt-3">Description :</p>
                                     <p>{description}</p>
                                     <button type="button" className="main-link" style={{margin: "0.75rem"}}
-                                            onClick={() => {addToCart(id)}}>add to cart</button>
+                                            onClick={() => {addToCart(singleProduct)}}>add to cart</button>
                                     <Link to='/products' className="main-link" style={{margin: "0.75rem"}}>back to products</Link>
                                 </div>
 
                             </div>
                         </div>
                     </section>
-                }}
+                    }}</CartConsumer>
+                }}}
             </ProductConsumer>
         </>
     )

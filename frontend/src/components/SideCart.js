@@ -1,11 +1,11 @@
 import React from "react";
-import {ProductConsumer} from "../context";
+import {CartConsumer} from "../context/CartContext";
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
 
 export default function SideCart() {
     return (
-        <ProductConsumer>
+        <CartConsumer>
             {value => {
                 const {cartOpen, closeCart, cart, cartTotal} = value;
                 return <CartWrapper show={cartOpen} onClick={closeCart}>
@@ -16,10 +16,11 @@ export default function SideCart() {
                                         <div className="mt-3">
                                             <h6 className="text-uppercase">{item.title}</h6>
                                         </div>
+                                <hr/>
                             </li>
                         })}
                     </ul>
-
+                    
                     <h4 className="text-capitalize text-center text-main mb-4">
                         cart total: ${cartTotal}
                     </h4>
@@ -30,7 +31,7 @@ export default function SideCart() {
 
                 </CartWrapper>
             }}
-        </ProductConsumer>
+        </CartConsumer>
     )
 }
 
