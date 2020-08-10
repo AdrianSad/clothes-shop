@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montaga&family=Open+Sans:wght@700&display=swap');
-
+@import "~react-image-gallery/styles/css/image-gallery.css";
 :root{
   --primaryColor: #ec9b13;
   --primaryColorDark: #c18308;

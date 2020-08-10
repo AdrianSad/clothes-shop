@@ -128,7 +128,7 @@ class Checkout extends React.Component {
                                         loading: false
                                     });
                                     clearCart();
-                                    this.props.history.push("/profile");
+                                    this.props.history.push("/products");
                                     window.location.reload();
                                     return;
                                 } else {
@@ -173,7 +173,8 @@ class Checkout extends React.Component {
                                                     <label htmlFor="fname"><FaUser/> Full
                                                         Name</label>
                                                     <Input type="text" id="fname" name="fullname"
-                                                           placeholder="Adrian Małolepszy" onChange={this.onChangeName} validations={[required, vname]}/>
+                                                           placeholder="Adrian Małolepszy" onChange={this.onChangeName}
+                                                           validations={[required, vname]}/>
                                                     <label htmlFor="email"><FaEnvelope/> Email</label>
                                                     <input type="text" id="email" name="email"
                                                            placeholder="jan@example.com"/>
@@ -207,13 +208,15 @@ class Checkout extends React.Component {
                                                         <FaCcMastercard/>
                                                         <FaCcDiscover/>
                                                     </div>
-                                                        <label htmlFor="cname">Name on Card</label>
-                                                    <Input type="text" id="cname" name="cardname" value={this.state.nameOnCart} placeholder="Name on card"
+                                                    <label htmlFor="cname">Name on Card</label>
+                                                    <Input type="text" id="cname" name="cardname"
+                                                           value={this.state.nameOnCart} placeholder="Name on card"
                                                            onChange={this.onChangeNameOnCart}/>
-                                                    <label  htmlFor="ccnum">Credit card number</label>
+                                                    <label htmlFor="ccnum">Credit card number</label>
                                                     {/*<input type="text" id="ccnum" name="cardnumber"*/}
                                                     {/*       placeholder="1111-2222-3333-4444"/>*/}
-                                                    <CardNumberElement onChange={this.onChangeCreditCardNumber} value={this.state.creditCardNumber} id="ccnum"/>
+                                                    <CardNumberElement onChange={this.onChangeCreditCardNumber}
+                                                                       value={this.state.creditCardNumber} id="ccnum"/>
                                                     <label htmlFor="ccexp">Expiration Date</label>
                                                     <CardExpiryElement id="ccexp"/>
 
@@ -236,8 +239,17 @@ class Checkout extends React.Component {
                                             </div>
                                             <label>
                                                 <input type="checkbox" checked="checked" name="sameadr"/> Shipping
-                                                    address same as billing
+                                                address same as billing
                                             </label>
+
+                                            {
+                                                this.state.message.length > 0 ?
+                                                    <div className="alert alert-danger" role="alert">
+                                                        {this.state.message}
+                                                    </div>
+                                                    : null
+                                            }
+
                                             <input type="submit" value={"Pay " + cartTotal + "zł"} className="btn"/>
 
                                         </Form>
@@ -248,7 +260,8 @@ class Checkout extends React.Component {
                                         <h4 className="my-3">Cart <span className="price">
                                             <FaShoppingCart/><b>{cartItems}</b></span></h4>
                                         {cart.map(item => {
-                                            return <p><Link to={`/products/${item.id}`}>{item.title}<span className="price">{item.price}</span></Link></p>
+                                            return <p><Link to={`/products/${item.id}`}>{item.title}<span
+                                                className="price">{item.price}</span></Link></p>
                                         })}
                                         <hr/>
                                         <p>Total <span className="price"><b>{cartTotal} zł</b></span></p>
@@ -277,7 +290,6 @@ const StripeWrapper = () => {
         </Elements>
     </StripeProvider>
 };
-
 
 
 const CheckoutWrapper = styled.div`
@@ -394,65 +406,6 @@ span.price {
     font-weight: bold;
 }
 
-                        //margin-top: 400px;
-                        //
-                        //.section{
-                        //    padding: 4rem 0;
-                        //}
-                        //
-                        //@-webkit-keyframes animatezoom {
-                        //    from {-webkit-transform: scale(0)}
-                        //    to {-webkit-transform: scale(1)}
-                        //}
-                        //
-                        //@keyframes animatezoom {
-                        //    from {transform: scale(0)}
-                        //    to {transform: scale(1)}
-                        //}
-                        //
-                        //.form {
-                        //    width: 85vw;
-                        //    margin: 0 auto;
-                        //    max-width: 30rem;
-                        //    border-style: solid;
-                        //    border-width: 2px;
-                        //    //border-radius: 1rem;
-                        //    border-color: var(--primaryColor);
-                        //
-                        //    transform: translate(-50%, -50%);
-                        //    box-sizing: border-box;
-                        //    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-                        //    text-transform: capitalize;
-                        //    background: var(--mainWhite);
-                        //}
-                        //
-                        //.login-form input{
-                        //    width: 100%;
-                        //    margin-bottom: 1.25rem;
-                        //    border: none;
-                        //    border-bottom: 1px solid var(--primaryColor);
-                        //    background: transparent;
-                        //    outline: none;
-                        //}
-                        //
-                        //.form-input{
-                        //    padding: 1rem 1rem;
-                        //    -webkit-animation: animatezoom 0.6s;
-                        //    animation: animatezoom 0.6s;
-                        //}
-                        //
-                        //.submit-link{
-                        //    margin - top: 1rem;
-                        //    position: relative;
-                        //    left: 50%;
-                        //    -ms-transform: translateX(-50%);
-                        //    transform: translateX(-50%);
-                        //}
-                        //
-                        //.card-element {
-                        //    padding: 1rem;
-                        //    font-size: 4rem;
-                        //}
-                        `;
+`;
 
 export default StripeWrapper;

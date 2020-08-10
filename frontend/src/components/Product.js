@@ -6,6 +6,7 @@ import {ProductConsumer} from "../context/ProductsContext";
 import {Lightbox} from "react-modal-image";
 import * as PropTypes from "prop-types";
 import {CartConsumer} from "../context/CartContext";
+import no_image from "../images/no_image.jpg";
 
 export default class Product extends Component {
     constructor(props) {
@@ -27,7 +28,6 @@ export default class Product extends Component {
 
         return <ProductConsumer>
             {value => {
-                const {setSingleProduct} = value;
 
                 return (
                     <CartConsumer>
@@ -38,7 +38,7 @@ export default class Product extends Component {
                                 <>
                                     {this.state.open && (
                                         <Lightbox
-                                            large={product.image}
+                                            large={product.main_image}
                                             alt={product.title}
                                             hideZoom={true}
                                             hideDownload={true}
@@ -52,7 +52,7 @@ export default class Product extends Component {
 
                                             <div className="img-container">
                                                 <Link to={`/products/${product.id}`}>
-                                                    <img src={product.image} className="card-img-top"
+                                                    <img src={product.main_image || no_image} className="card-img-top"
                                                          alt="product image"
                                                          style={{height: '320px'}}/>
 
@@ -67,8 +67,8 @@ export default class Product extends Component {
                                                 <FaCartPlus className="icon" onClick={() => addToCart(product)}/>
                                             </div>
                                             <div className="card-body d-flex justify-content-between">
-                                                <p className="mb-0">{product.title}</p>
-                                                <p className="mb-0 text-main text-price">{product.price} zł</p>
+                                                <p className="mb-0">{product.title || "default"}</p>
+                                                <p className="mb-0 text-main text-price">{product.price || 0} zł</p>
                                             </div>
 
                                             {product.featured ?
@@ -89,7 +89,14 @@ export default class Product extends Component {
     }
 };
 
-Product.propTypes = {product: PropTypes.any}
+Product.propTypes = {
+    product: PropTypes.shape({
+        main_image: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        id: PropTypes.number.isRequired
+    })
+}
 
 const ProductWrapper = styled.div`
 

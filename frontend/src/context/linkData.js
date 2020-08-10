@@ -29,4 +29,14 @@ export const linkData = [
         text: 'login',
         path: '/login'
     },
+    {
+        id: 7,
+        text: 'profile',
+        path: '/profile'
+    },
+    {
+        id: 8,
+        text: 'new product',
+        path: '/products/new'
+    },
 ];

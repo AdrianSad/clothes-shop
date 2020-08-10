@@ -42,9 +42,7 @@ class App extends React.Component {
                     <PrivateRoute path="/checkout" component={Checkout}/>
                     <PrivateRoute path="/products/new" component={NewProduct}/>
                     <Route path="/register" exact component={LoginPage}/>
-                    <PrivateRoute path="/profile">
-                        <Profile/>
-                    </PrivateRoute>
+                    <PrivateRoute path="/profile" component={Profile}/>
                     <Route path="/cart" component={Cart}/>
                     <Route path="/products/:id" component={SingleProduct}/>
                     <Route component={Default}/>

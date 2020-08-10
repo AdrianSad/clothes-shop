@@ -31,7 +31,6 @@ const ProductFilter = () => {
                                             value={size}>
                                         {
                                             sizes.map((size, index) => {
-                                                console.log(size, index);
                                                 return <option key={index} value={size}>{size}</option>
                                             })
                                         }

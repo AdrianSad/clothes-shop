@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 import {FaDolly, FaRedo, FaDollarSign} from "react-icons/fa";
-import wave from "../../images/wave.svg";
 
 class Services extends Component {
     state = {
@@ -38,15 +37,15 @@ class Services extends Component {
 
                                 <div className="col-8 mx-auto col-sm-4 col-md-3 text-center my-3 card" key={item.id}>
 
-                                    <div className="service-icon">
+                                    <div className="service-icon" key={item.id}>
                                         {item.icon}
                                     </div>
 
-                                    <div className="mt-3 text-capitalize">
+                                    <div className="mt-3 text-capitalize" key={item.id}>
                                         {item.title}
                                     </div>
 
-                                    <div className="mt-3">
+                                    <div className="mt-3" key={item.id}>
                                         <p>{item.text}</p>
                                     </div>
 

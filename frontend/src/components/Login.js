@@ -101,68 +101,51 @@ class Login extends React.Component {
     handleLogin() {
 
         if (this.checkBtn.context._errors.length === 0) {
-            login(this.state.username, this.state.password).then(
-                () => {
-                    this.props.history.push("/profile");
-                    window.location.reload();
-                },
-                error => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
+            let loginResp = login(this.state.username, this.state.password)
 
-                    this.setState({
-                        loading: false,
-                        message: resMessage
-                    });
-                }
-            );
-        } else {
-            this.setState({
-                loading: false
-            });
+            if(loginResp){
+                this.setState({
+                    message: "",
+                    successful: true,
+                    loading: false
+                });
+                this.props.history.push("/profile");
+                window.location.reload();
+                return;
+            } else {
+                this.setState({
+                    message: "There was an error. please try again!",
+                    successful: false,
+                    loading: false
+                });
+            }
         }
     }
 
-    handleRegister() {
+    async handleRegister() {
 
         if (this.checkBtn.context._errors.length === 0) {
-            registerUser(
+            let register = await registerUser(
                 this.state.username,
                 this.state.email,
                 this.state.password
-            ).then(
-                response => {
-                    this.setState({
-                        message: response.message,
-                        successful: true,
-                        loading: false,
-                        password: ""
-                    });
-                    this.toggleMember();
-                },
-                error => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-
-                    this.setState({
-                        loading: false,
-                        successful: false,
-                        message: resMessage
-                    });
-                }
             );
-        } else {
-            this.setState({
-                loading: false
-            });
+
+            if(register){
+                this.setState({
+                    password: "",
+                    message: "",
+                    successful: true,
+                    loading: false
+                });
+                this.toggleMember();
+            } else {
+                this.setState({
+                    message: "There was an error. please try again!",
+                    successful: false,
+                    loading: false
+                });
+            }
         }
     }
 
@@ -180,7 +163,7 @@ class Login extends React.Component {
         if (this.state.isMember) {
             this.handleLogin();
         } else {
-            this.handleRegister();
+            await this.handleRegister();
         }
     };
 
@@ -238,13 +221,13 @@ class Login extends React.Component {
                                 }
 
 
-                                {this.state.message && (
-                                    <div className="form-group">
+                                {
+                                    this.state.message.length > 0 ?
                                         <div className="alert alert-danger" role="alert">
                                             {this.state.message}
                                         </div>
-                                    </div>
-                                )}
+                                        : null
+                                }
 
                                 <button type="submit" className="main-link submit-link" disabled={this.state.loading}>
                                     {this.state.loading ? (

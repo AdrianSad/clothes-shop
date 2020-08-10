@@ -28,7 +28,7 @@ export default function Navbar() {
 
                                         <FaBars className="nav-icon" onClick={handleSidebar}/>
 
-                                        <Link to="/"><img src={logo}
+                                        <Link to="/"><img className="nav-logo-hidden" src={logo}
                                                           alt="Clothes Shop Logo"/></Link>
 
                                         <div className="nav-cart">
@@ -177,5 +177,21 @@ const NavWrapper = styled.nav`
       color: var(--primaryColor);
       cursor: pointer;
     }
+    
+    
+    @media (max-width: 767px) {        
+    padding: 1rem 1.5rem;       
+   .nav-logo,
+    .nav-logo-hidden{
+      display: none;
+   }
+}
+
+@media (max-width: 960px) {        
+    padding: 1rem 1.5rem;   
+    .nav-logo {
+      display: none;
+   }    
+}
 
     `;
