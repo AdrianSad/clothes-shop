@@ -28,6 +28,12 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/user")
+    public Iterable<Product> getUserProducts(){
+        return productService.getUserProducts();
+    }
+
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id){
         return productService.getProduct(id);

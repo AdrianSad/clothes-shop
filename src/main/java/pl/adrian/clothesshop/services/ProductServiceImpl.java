@@ -1,23 +1,18 @@
 package pl.adrian.clothesshop.services;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.adrian.clothesshop.models.Product;
-import pl.adrian.clothesshop.models.User;
 import pl.adrian.clothesshop.models.payload.request.ProductRequest;
 import pl.adrian.clothesshop.repositories.ProductRepository;
 import pl.adrian.clothesshop.security.UserDetailsImpl;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
@@ -31,6 +26,17 @@ public class ProductServiceImpl implements ProductService{
         List<Product> products = new ArrayList<>();
 
         productRepository.findAll().iterator().forEachRemaining(products::add);
+        return products;
+    }
+
+    @Override
+    public List<Product> getUserProducts() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
+
+        List<Product> products = new ArrayList<>();
+        productRepository.findAllByUsername(currentUser.getUsername()).forEach(products::add);
 
         return products;
     }
@@ -39,7 +45,7 @@ public class ProductServiceImpl implements ProductService{
     public Product getProduct(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
 
-        if(productOptional.isPresent()){
+        if (productOptional.isPresent()) {
             return productOptional.get();
         } else {
             throw new RuntimeException("Product Not Found");
@@ -53,19 +59,17 @@ public class ProductServiceImpl implements ProductService{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl currentUser = (UserDetailsImpl) authentication.getPrincipal();
 
-        String test = productRequest.getMain_image().split(",")[1];
-
         Product product = Product.builder()
                 .title(productRequest.getTitle())
                 .price(productRequest.getPrice())
-                .user_id(currentUser.getId())
+                .username(currentUser.getUsername())
                 .description(productRequest.getDescription())
                 .size(productRequest.getSize())
                 .featured(productRequest.getFeatured())
                 .free_shipping(productRequest.getFree_shipping())
                 .main_image(Base64.getDecoder().decode(productRequest.getMain_image().split(",")[1]))
-                .image2(Base64.getDecoder().decode(productRequest.getImage2().split(",")[1]))
-                .image3(Base64.getDecoder().decode(productRequest.getImage3().split(",")[1]))
+                .image2(productRequest.getImage2() != null ? Base64.getDecoder().decode(productRequest.getImage2().split(",")[1]) : null)
+                .image3(productRequest.getImage2() != null ? Base64.getDecoder().decode(productRequest.getImage3().split(",")[1]) : null)
                 .build();
 
         productRepository.save(product);
@@ -74,7 +78,36 @@ public class ProductServiceImpl implements ProductService{
     @Override
     @Transactional
     public void addProduct(Product product) {
-
         productRepository.save(product);
     }
+
+//    @Override
+//    @Transactional
+//    public void saveImageFile(Long productId, MultipartFile main_image, MultipartFile image2, MultipartFile image3) {
+//
+//        Product product = getProduct(productId);
+//        product.setMain_image(getBytes(main_image));
+//        product.setImage2(getBytes(image2));
+//        product.setImage3(getBytes(image3));
+//        addProduct(product);
+//    }
+//
+//    private byte[] getBytes(MultipartFile file) {
+//
+//        try{
+//            byte[] byteObject = new byte[file.getBytes().length];
+//            int i = 0;
+//
+//            for(byte b : file.getBytes()){
+//                byteObject[i++] = b;
+//            }
+//
+//            return byteObject;
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return new byte[0];
+//    }
+
 }

@@ -27,8 +27,8 @@ public class Product implements Serializable {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "user_id")
-    private Long user_id;
+    @Column(name = "username")
+    private String username;
 
     @Lob
     @Column(name = "description")
