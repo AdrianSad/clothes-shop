@@ -29,7 +29,7 @@ const CartTotals = ({history}) => {
                         </div>
                         <div className="col text-center my-5">
                             <PayPalBtn history={history} cartTotal={cartTotal} clearCart={clearCart}/>
-                            <Link to="/checkout" className="main-link my-5">Checkout</Link>
+                            <Link to="/checkout" className="main-link my-5">{localStorage.getItem("user") ? "Checkout" : "Log in and pay"}</Link>
                         </div>
                     </>
                     // <div className="col text-title text-center my-4">

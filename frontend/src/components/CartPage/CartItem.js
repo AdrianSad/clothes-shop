@@ -4,13 +4,13 @@ import styled from "styled-components";
 
 const CartItem = ({cartItem, removeItem}) => {
 
-    const {id, title, price, total, image} = cartItem;
+    const {id, title, price, total, main_image} = cartItem;
 
     return (<ItemWrapper>
             <div className="row mt-5 mt-lg-0 text-capitalize text-center align-items-center item">
 
                 <div className="col-10 mx-auto col-lg-2 pb-2">
-                    <img src={image} alt="product image" width="60" className="img-fluid"/>
+                    <img src={main_image} alt="product image" width="60" className="img-fluid"/>
                 </div>
 
                 <div className="col-10 mx-auto col-lg-2 pb-2">

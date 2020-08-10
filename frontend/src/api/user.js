@@ -13,7 +13,7 @@ async function registerUser(username, email, password) {
 
 async function login(username, password) {
 
-    return await axios.post(`${url}/login`, {
+    return axios.post(`${url}/login`, {
         username,
         password
     }).then(response => {

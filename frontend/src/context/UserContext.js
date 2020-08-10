@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {getCurrentUser, logout} from "../api/user";
+import {getUserProducts} from "../api/product";
 
 const UserContext = React.createContext();
 
@@ -7,8 +8,18 @@ class UserProvider extends Component {
 
     state = {
         show: false,
-        user: getCurrentUser()
+        user: getCurrentUser(),
+        userProducts: []
     };
+
+    componentDidMount() {
+
+        getUserProducts().then(response => {
+            this.setState({
+                userProducts: response.data
+            })
+        })
+    }
 
     showModal = () => {
         this.setState({
