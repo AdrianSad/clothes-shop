@@ -24,3 +24,22 @@ export default async function submitProduct({title, price, description, size, fe
         )
         .catch(error => console.log(error));
 }
+
+export async function getProducts(){
+    return await axios
+        .get(
+            `${url}/products`
+        )
+        .catch(error => console.log(error));
+}
+
+export async function getUserProducts(){
+    return await axios
+        .get(
+            `${url}/products/user`,
+            {
+                headers: authHeader()
+            }
+        )
+        .catch(error => console.log(error));
+}
