@@ -20,11 +20,13 @@ export default class Profile extends Component {
     componentDidMount() {
 
         getUserProducts().then(response => {
-            const tempProducts = response.data;
-            if(tempProducts) {
-                this.setState({
-                    userProducts: tempProducts
-                })
+            if(response) {
+                const tempProducts = response.data;
+                if (tempProducts) {
+                    this.setState({
+                        userProducts: tempProducts
+                    })
+                }
             }
         })
     }

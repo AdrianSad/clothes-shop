@@ -15,69 +15,84 @@ export default function Navbar() {
                 const {cartItems, handleSidebar, handleCart, hidden} = value;
 
                 return (
-                <UserConsumer>
-                    {valueUser => {
+                    <UserConsumer>
+                        {valueUser => {
 
-                        const {showModal, userLogout, user} = valueUser;
+                            const {showModal, userLogout, user} = valueUser;
 
-                        return (
-                            <NavWrapper hide={hidden}>
+                            return (
+                                <NavWrapper hide={hidden}>
+                                    {hidden ?
+                                        <div className="nav-center">
 
-                                {hidden ?
-                                    <div className="nav-center">
+                                            <FaBars className="nav-icon" onClick={handleSidebar}/>
 
-                                        <FaBars className="nav-icon" onClick={handleSidebar}/>
+                                            <Link to="/"><img className="nav-logo-hidden" src={logo}
+                                                              alt="Clothes Shop Logo"/></Link>
 
-                                        <Link to="/"><img className="nav-logo-hidden" src={logo}
-                                                          alt="Clothes Shop Logo"/></Link>
-
-                                        <div className="nav-cart">
-                                            <FaCartPlus className="nav-icon" onClick={handleCart}/>
-                                            <div className="cart-items">
-                                                {cartItems}
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    :
-                                    <ul>
-                                        <li>
-                                            <Link to="/" className="nav-link">
-                                                home
-                                            </Link>
-                                        </li>
-
-                                        <li>
-                                            <Link to="/contact" className="nav-link">
-                                                contact
-                                            </Link>
-                                        </li>
-
-                                        <Link to="/"><img className="nav-logo" src={logo}
-                                                          alt="Clothes Shop Logo"/></Link>
-                                        <li>
-                                            { user.token
-                                                ? <a className="login-btn" onClick={userLogout}> Logout </a>
-                                                    : <a className="login-btn" onClick={showModal}> Login </a>
-                                            }
-                                        </li>
-
-                                        <li>
-                                            <Link to="/cart" className="nav-link">
-                                                cart
-                                                <div className="text-cart">
+                                            <div className="nav-cart">
+                                                <FaCartPlus className="nav-icon" onClick={handleCart}/>
+                                                <div className="cart-items">
                                                     {cartItems}
                                                 </div>
-                                            </Link>
-                                        </li>
+                                            </div>
 
-                                    </ul>
-                                }
-                            </NavWrapper>
-                        );
-                    }}
-                </UserConsumer>
+                                        </div>
+
+                                        :
+                                        <ul>
+                                            <li>
+                                                <Link to="/" className="nav-link">
+                                                    home
+                                                </Link>
+                                            </li>
+
+                                            <li>
+                                                <Link to="/contact" className="nav-link">
+                                                    contact
+                                                </Link>
+                                            </li>
+
+                                            <Link to="/"><img className="nav-logo" src={logo}
+                                                              alt="Clothes Shop Logo"/></Link>
+                                            {/*<li>*/}
+                                            {/*    { user.token*/}
+                                            {/*        ? <a className="login-btn" onClick={userLogout}> Logout </a>*/}
+                                            {/*            : <a className="login-btn" onClick={showModal}> Login </a>*/}
+                                            {/*    }*/}
+                                            {/*</li>*/}
+
+                                            {
+                                                user.token ? <li className="dropdown">
+                                                        <p className="login-btn">{user.username}</p>
+                                                        <div className="dropdown-content">
+                                                            <Link to="/profile" className="dropdown-btn">Profile</Link>
+                                                            <Link to="/products/new" className="dropdown-btn">New
+                                                                Product</Link>
+                                                            <a className="dropdown-btn" onClick={userLogout}>Logout</a>
+                                                        </div>
+                                                    </li>
+                                                    : <li>
+                                                        <a className="login-btn" onClick={showModal}> Login </a>
+                                                    </li>
+                                            }
+
+                                            <li>
+                                                <Link to="/cart" className="nav-link">
+                                                    cart
+                                                    <div className="text-cart">
+                                                        {cartItems}
+                                                    </div>
+                                                </Link>
+                                            </li>
+
+                                        </ul>
+                                    }
+
+                                </NavWrapper>
+                            );
+                        }}
+                    </UserConsumer>
                 );
             }}
 
@@ -95,6 +110,7 @@ const NavWrapper = styled.nav`
     background: var(--mainWhite);
     box-shadow: 0 1px 18px 0px var(--primaryColor);
     z-index: 2;
+   
     .nav-center {
     display: flex;
     align-items: center;
@@ -144,6 +160,46 @@ const NavWrapper = styled.nav`
     display: inline-block;
     }
     
+    li .dropdown-btn{
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  transition: var(--mainTransition);
+}
+
+  li.dropdown {
+  display: inline-block;
+  }
+  
+  .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 3;
+}
+
+  .dropdown-content .dropdown-btn {
+  color: black;
+  padding: 1rem;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+ .dropdown-content .dropdown-btn:hover{
+  background: var(--primaryColor);
+  color: var(--mainWhite);
+  cursor: pointer;
+}
+
+  .dropdown-content .dropdown-btn {background-color: #f1f1f1;}
+
+  .dropdown:hover .dropdown-content {
+  display: block;
+}
+    
     .nav-link{
     font-size: 1.5rem;
     text-transform: capitalize;
@@ -171,13 +227,14 @@ const NavWrapper = styled.nav`
      font-size: 1.5rem;
      text-transform: capitalize;
      transition: var(--mainTransition);
+     margin: 0;
     }
-    
+
     .login-btn:hover{
       color: var(--primaryColor);
       cursor: pointer;
     }
-    
+
     
     @media (max-width: 767px) {        
     padding: 1rem 1.5rem;       

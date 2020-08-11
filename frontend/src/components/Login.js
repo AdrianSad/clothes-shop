@@ -98,7 +98,7 @@ class Login extends React.Component {
         });
     }
 
-    handleLogin() {
+    async handleLogin() {
 
         if (this.checkBtn.context._errors.length === 0) {
 
@@ -108,7 +108,7 @@ class Login extends React.Component {
                 loading: true
             });
 
-            let loginResp = login(this.state.username, this.state.password)
+            let loginResp = await login(this.state.username, this.state.password)
 
             if(loginResp){
                 this.setState({
@@ -116,9 +116,9 @@ class Login extends React.Component {
                     successful: true,
                     loading: false
                 });
-                this.props.history.push("/profile");
-                window.location.reload();
-                return;
+                // this.props.history.push("/profile");
+                 window.location.reload();
+                 return;
             } else {
                 this.setState({
                     message: "There was an error. please try again!",
