@@ -41,7 +41,7 @@ public class Product implements Serializable {
     private Boolean featured;
 
     @Column(name = "free_shipping")
-    private Boolean free_shipping;
+    private Boolean freeShipping;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="order_id")
