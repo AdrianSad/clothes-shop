@@ -23,6 +23,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Checkout from "./pages/Checkout";
 import NewProduct from "./pages/NewProduct";
 import LoginPage from "./pages/LoginPage";
+import CompletedCheckout from "./pages/CompletedCheckout";
 
 class App extends React.Component {
 
@@ -40,6 +41,7 @@ class App extends React.Component {
                     <Route path="/contact" exact component={Contact}/>
                     <Route path="/login" exact component={LoginPage}/>
                     <PrivateRoute path="/checkout" component={Checkout}/>
+                    <PrivateRoute path="/success" component={CompletedCheckout}/>
                     <PrivateRoute path="/products/new" component={NewProduct}/>
                     <Route path="/register" exact component={LoginPage}/>
                     <PrivateRoute path="/profile" component={Profile}/>

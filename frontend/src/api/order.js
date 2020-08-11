@@ -2,16 +2,14 @@ import axios from 'axios';
 
 const url = "http://localhost:8080";
 
-export default async function submitOrder({ name, total, items, stripe_token_id, token }) {
-    console.log(name, total, items, stripe_token_id, token );
+export default async function submitOrder({ stripeEmail, amount, stripeToken, token }) {
     return await axios
         .post(
-            `${url}/orders`,
+            `${url}/charge`,
             {
-                name,
-                total,
-                items,
-                stripe_token_id
+                stripeEmail,
+                amount,
+                stripeToken
             },
             {
                 headers: {

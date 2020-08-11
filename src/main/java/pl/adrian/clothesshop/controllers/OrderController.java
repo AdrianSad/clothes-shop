@@ -2,14 +2,15 @@ package pl.adrian.clothesshop.controllers;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import pl.adrian.clothesshop.models.Order;
 import pl.adrian.clothesshop.models.payload.request.ChargeRequest;
+import pl.adrian.clothesshop.models.payload.response.ChargeResponse;
+import pl.adrian.clothesshop.models.payload.response.ProductResponse;
 import pl.adrian.clothesshop.services.OrderService;
 import pl.adrian.clothesshop.services.StripeServiceImpl;
 
@@ -35,16 +36,31 @@ public class OrderController {
         return ResponseEntity.ok("Order created successfully!");
     }
 
-//    @PostMapping("/charge")
-//    public String charge(ChargeRequest chargeRequest)
-//            throws StripeException {
-//        chargeRequest.setDescription("Example charge");
-//        chargeRequest.setCurrency(ChargeRequest.Currency.PLN);
-//        Charge charge = stripeService.charge(chargeRequest);
-//        model.addAttribute("id", charge.getId());
-//        model.addAttribute("status", charge.getStatus());
-//        model.addAttribute("chargeId", charge.getId());
-//        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
-//        return "result";
-//    }
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PostMapping("/charge")
+    public ResponseEntity<ChargeResponse> charge(@RequestBody ChargeRequest chargeRequest)
+            throws StripeException {
+
+        try {
+            ChargeResponse chargeResponse = new ChargeResponse();
+            chargeRequest.setDescription("Example charge");
+            chargeRequest.setCurrency(ChargeRequest.Currency.PLN);
+            Charge charge = stripeService.charge(chargeRequest);
+            chargeResponse.setId(charge.getId());
+            chargeResponse.setStatus(charge.getStatus());
+            chargeResponse.setChargeId(charge.getId());
+            chargeResponse.setBalanceTransaction(charge.getBalanceTransaction());
+
+            return new ResponseEntity<>(chargeResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ExceptionHandler(StripeException.class)
+    public String handleError(Model model, StripeException ex) {
+        model.addAttribute("error", ex.getMessage());
+        return "result";
+    }
+
 }

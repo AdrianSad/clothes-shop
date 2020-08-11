@@ -8,9 +8,9 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     return (
         <UserConsumer>
             {value => {
-                const {user, checkUserToken} = value;
+                const {user} = value;
                 return <Route {...rest} render={(props) => {
-                return checkUserToken ? <Component {...props}/> : <Redirect to="/login"/>;
+                return user.token ? <Component {...props}/> : <Redirect to="/login"/>;
             }}/>
             }}
         </UserConsumer>

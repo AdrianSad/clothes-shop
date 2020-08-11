@@ -7,7 +7,8 @@ class UserProvider extends Component {
 
     state = {
         show: false,
-        user: getCurrentUser()
+        user: getCurrentUser(),
+        checkout: {}
     };
 
     showModal = () => {
@@ -22,9 +23,22 @@ class UserProvider extends Component {
             });
     };
 
+    setCheckout = response => {
+        this.setState({
+            checkout: response
+        });
+    }
+
     checkUserToken = () =>{
         return !!getCurrentUser().token;
     }
+
+    userLogout = () => {
+        this.setState({
+            user: { username: null, token: null }
+        });
+        logout();
+    };
 
 
     render() {
@@ -33,7 +47,9 @@ class UserProvider extends Component {
                 ...this.state,
                 showModal: this.showModal,
                 onClose: this.onClose,
-                checkUserToken: this.checkUserToken
+                userLogout: this.userLogout,
+                checkUserToken: this.checkUserToken,
+                setCheckout: this.setCheckout
             }}>
                 {this.props.children}
             </UserContext.Provider>

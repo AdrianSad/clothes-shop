@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {UserConsumer} from "../context/UserContext";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import {Redirect, withRouter} from 'react-router-dom';
 
 import {
     CardElement,
@@ -52,7 +53,6 @@ class Checkout extends React.Component {
 
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeNameOnCart = this.onChangeNameOnCart.bind(this);
-        this.onChangeCreditCardNumber = this.onChangeCreditCardNumber.bind(this);
 
         this.state = {
             loading: false,
@@ -60,7 +60,8 @@ class Checkout extends React.Component {
             message: "",
             name: "",
             nameOnCart: "",
-            creditCardNumber: ""
+            response: {},
+            redirect: false
         };
     }
 
@@ -71,11 +72,6 @@ class Checkout extends React.Component {
         });
     }
 
-    onChangeCreditCardNumber(e) {
-        this.setState({
-            creditCardNumber: e.target.value
-        });
-    }
 
     onChangeNameOnCart(e) {
         this.setState({
@@ -92,7 +88,7 @@ class Checkout extends React.Component {
 
                     return <UserConsumer>{userValue => {
 
-                        const {user} = userValue;
+                        const {user, setCheckout} = userValue;
 
                         const handleSubmit = async (e) => {
                             e.preventDefault();
@@ -114,23 +110,37 @@ class Checkout extends React.Component {
                                 const {id} = token;
 
                                 let order = await submitOrder({
-                                    name: this.state.name,
-                                    total: cartTotal,
+                                    stripeEmail: user.email,
+                                    amount: cartTotal * 100,
                                     items: cart,
-                                    stripe_token_id: id,
+                                    stripeToken: id,
                                     token: user.token
                                 });
 
+                                console.log("ORDER", order);
+
                                 if (order) {
+                                    console.log("CLEARING")
+
                                     this.setState({
                                         message: "",
                                         successful: true,
-                                        loading: false
+                                        loading: false,
+                                        response: order.data,
+                                        redirect: true
+                                    }, () => {
+                                        setCheckout(this.state.response);
+
+                                        clearCart();
+
+                                        console.log("PUSHING");
                                     });
-                                    clearCart();
-                                    this.props.history.push("/products");
-                                    window.location.reload();
-                                    return;
+
+
+
+                                    // this.props.history.push("/products");
+                                    // window.location.reload();
+
                                 } else {
                                     this.setState({
                                         message: "There was an error with your order. please try again!",
@@ -149,13 +159,13 @@ class Checkout extends React.Component {
                         }
 
 
-                        if (cart.length === 0) {
+                        if(this.state.redirect){
+                            return <Redirect to="/success"/>;
+                        } else if (cart.length === 0) {
                             return <h1 className="text-title text-center my-5" style={{padding: "10rem"}}>
                                 Your cart is currently empty
                             </h1>
-                        }
-
-                        return <CheckoutWrapper>
+                        } else return <CheckoutWrapper>
 
                             <div className="row">
                                 <div className="col-75">
@@ -215,8 +225,7 @@ class Checkout extends React.Component {
                                                     <label htmlFor="ccnum">Credit card number</label>
                                                     {/*<input type="text" id="ccnum" name="cardnumber"*/}
                                                     {/*       placeholder="1111-2222-3333-4444"/>*/}
-                                                    <CardNumberElement onChange={this.onChangeCreditCardNumber}
-                                                                       value={this.state.creditCardNumber} id="ccnum"/>
+                                                    <CardNumberElement id="ccnum"/>
                                                     <label htmlFor="ccexp">Expiration Date</label>
                                                     <CardExpiryElement id="ccexp"/>
 
@@ -408,4 +417,4 @@ span.price {
 
 `;
 
-export default StripeWrapper;
+export default withRouter(StripeWrapper);
