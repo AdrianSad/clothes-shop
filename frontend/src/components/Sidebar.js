@@ -58,4 +58,9 @@ const SideWrapper = styled.nav`
   @media (min-width: 576px){
   width: 20rem;
   }
+  
+  @media (max-width: 960px) {        
+      top: 57px;
+  
+}
 `;

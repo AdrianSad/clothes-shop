@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {getCurrentUser, logout} from "../api/user";
-import {getUserProducts} from "../api/product";
 
 const UserContext = React.createContext();
 
@@ -8,18 +7,8 @@ class UserProvider extends Component {
 
     state = {
         show: false,
-        user: getCurrentUser(),
-        userProducts: []
+        user: getCurrentUser()
     };
-
-    componentDidMount() {
-
-        getUserProducts().then(response => {
-            this.setState({
-                userProducts: response.data
-            })
-        })
-    }
 
     showModal = () => {
         this.setState({
@@ -33,18 +22,9 @@ class UserProvider extends Component {
             });
     };
 
-    userLogin = user => {
-        this.setState({
-           user: user
-        });
-    };
-
-    userLogout = () => {
-        this.setState({
-            user: { username: null, token: null }
-        });
-        logout();
-    };
+    checkUserToken = () =>{
+        return !!getCurrentUser().token;
+    }
 
 
     render() {
@@ -53,8 +33,7 @@ class UserProvider extends Component {
                 ...this.state,
                 showModal: this.showModal,
                 onClose: this.onClose,
-                userLogin: this.userLogin,
-                userLogout: this.userLogout
+                checkUserToken: this.checkUserToken
             }}>
                 {this.props.children}
             </UserContext.Provider>

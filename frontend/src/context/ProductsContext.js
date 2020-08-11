@@ -1,124 +1,176 @@
 import React, {Component} from "react";
-import {socialData} from "./socialData";
 import {items} from "./productData";
-import {getProducts} from "../api/product";
+import {getAllFeatured, getAllFiltered} from "../api/product";
 
 const ProductContext = React.createContext();
 
 class ProductProvider extends Component {
 
     state = {
-        socialLinks: socialData,
-        storeProducts: [],
         filteredProducts: [],
         featuredProducts: [],
         loading: true,
         search: "",
         price: 0,
         min: 0,
-        max: 0,
+        max: 500,
         size: "ALL",
         shipping: false,
         page: 0,
-        favourites: []
+        pageSize: 3,
+        totalPages: 0,
+        totalItems: 0,
+        favourites: localStorage.getItem('favourites') ? JSON.parse(localStorage.getItem('favourites')) : []
     };
 
     componentDidMount() {
 
-        let tempProducts;
-
-        getProducts().then(response => {
-            tempProducts = response.data
-            tempProducts.map(item => {
-                return item.main_image = items.find(item2 => item.id === item2.id).main_image;
-            }, this.setProducts(tempProducts));
-        });
-
-
+        this.retrieveFilteredProducts();
+        this.retrieveFeaturedProducts();
     }
 
-    paginate = (products) => {
+    retrieveFeaturedProducts() {
+        getAllFeatured().then(response => {
+            if(response) {
 
-        const productsPerPage = 3;
-        const numberOfPages = Math.ceil(products.length / productsPerPage);
+                const tempProducts = response.data;
 
-        // const newProducts = Array.from({length:numberOfPages}, () => {
-        //    return products.splice(0,productsPerPage);
-        // });
 
-        return Array.from({length: numberOfPages}, (_, index) => {
-            const start = index * productsPerPage;
-            return products.slice(start, start + productsPerPage);
+                if (tempProducts) {
+                    tempProducts.map(item => {
+                        return item.main_image = items.find(item2 => item.id === item2.id).main_image;
+                    });
+
+                    this.setState({
+                        featuredProducts: tempProducts,
+                        loading: false
+                    })
+                } else {
+                    this.setState({
+                        featuredProducts: [],
+                        loading: false
+                    })
+                }
+            }
         });
-    };
+    }
+
+    retrieveFilteredProducts() {
+        let params = {};
+
+        params["page"] = this.state.page;
+        params["size"] = this.state.pageSize;
+        params["title"] = this.state.search;
+        params["freeShipping"] = this.state.shipping;
+        params["price"] = this.state.price;
+        params["pSize"] = this.state.size;
+
+        getAllFiltered(params).then(response => {
+            console.log(response);
+            if(response) {
+                const {totalPages, products, totalItems} = response.data;
+
+                console.log(response.data);
+                // SETTING IMAGE FOR INITIALIZED PRODUCTS
+                const tempProducts = products;
+                if (tempProducts) {
+                    products.map(item => {
+                        if (item.id < 7) {
+                            return item.main_image = items.find(item2 => item.id === item2.id).main_image;
+                        }
+                    });
+
+                    this.setState({
+                        totalPages: totalPages,
+                        filteredProducts: tempProducts,
+                        loading: false,
+                        totalItems: totalItems
+                    })
+                } else {
+
+                    this.setState({
+                        totalPages: 0,
+                        filteredProducts: [],
+                        loading: false,
+                        totalItems: 0
+                    })
+                }
+            }
+        })
+    }
+
+    // paginate = (products) => {
+    //
+    //     const productsPerPage = 3;
+    //     const numberOfPages = Math.ceil(products.length / productsPerPage);
+    //
+    //     // const newProducts = Array.from({length:numberOfPages}, () => {
+    //     //    return products.splice(0,productsPerPage);
+    //     // });
+    //
+    //     return Array.from({length: numberOfPages}, (_, index) => {
+    //         const start = index * productsPerPage;
+    //         return products.slice(start, start + productsPerPage);
+    //     });
+    // };
 
     changePage = (index) => {
         this.setState({
-            page: index
-        })
+            page: index,
+            loading: true
+        }, () => this.retrieveFilteredProducts())
     };
 
-    setProducts = (products) => {
-        let featuredProducts = products.filter(item => item.featured === true);
-
-        let maxPrice = Math.max(...products.map(item => item.price))
-
-        this.setState({
-            filteredProducts:  this.paginate(products),
-            storeProducts: products,
-            featuredProducts,
-            loading: false,
-            price: maxPrice,
-            max: maxPrice,
-            favourites: localStorage.getItem('favourites') ? JSON.parse(localStorage.getItem('favourites')) : []
-        })
-
-
+    handleChangePageSize = (event) => {
+        this.setState(
+            {
+                pageSize: event.target.value,
+                page: 0
+            },
+            () => {
+                this.retrieveFilteredProducts();
+            }
+        );
     }
-
 
     handleChange = event => {
         const name = event.target.name;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
 
         this.setState({
-                [name]: value
-            }, this.sortData
-        );
+            [name]: value
+        }, () => this.retrieveFilteredProducts()
+    );
     };
 
-    sortData = () => {
-        const {storeProducts, price, size, shipping, search} = this.state;
-        let tempProducts = [...storeProducts];
-
-        let tempPrice = parseInt(price);
-        tempProducts = tempProducts.filter(item => item.price <= tempPrice);
-
-        if (size !== "ALL") {
-            tempProducts = tempProducts.filter(item => item.size === size);
-
-        }
-
-        if (shipping) {
-            tempProducts = tempProducts.filter(item => item.free_shipping === true)
-        }
-
-        if (search.length > 0) {
-            tempProducts = tempProducts.filter(item => {
-                let searchTemp = search.toLowerCase();
-                let tempTitle = item.title.toLowerCase().search(searchTemp);
-
-                if (tempTitle > -1) {
-                    return item;
-                }
-            })
-        }
-
-        this.setState({
-            page: 0,
-            filteredProducts: this.paginate(tempProducts)
-        })
-    };
+    // sortData = () => {
+    //     const {storeProducts, price, size, shipping, search} = this.state;
+    //     let tempProducts = [...storeProducts];
+    //
+    //     let tempPrice = parseInt(price);
+    //     tempProducts = tempProducts.filter(item => item.price <= tempPrice);
+    //
+    //     if (size !== "ALL") {
+    //         tempProducts = tempProducts.filter(item => item.size === size);
+    //
+    //     }
+    //
+    //     if (shipping) {
+    //         tempProducts = tempProducts.filter(item => item.freeShipping === true)
+    //     }
+    //
+    //     if (search.length > 0) {
+    //         tempProducts = tempProducts.filter(item => {
+    //             let searchTemp = search.toLowerCase();
+    //             let tempTitle = item.title.toLowerCase().search(searchTemp);
+    //
+    //             if (tempTitle > -1) {
+    //                 return item;
+    //             }
+    //         })
+    //     }
+    //
+    // };
 
     addToFavourites = (product) => {
 
@@ -133,7 +185,7 @@ class ProductProvider extends Component {
 
         this.setState({
             favourites: tempFav
-        },() => localStorage.setItem("favourites", JSON.stringify(this.state.favourites)));
+        }, () => localStorage.setItem("favourites", JSON.stringify(this.state.favourites)));
     }
 
     render() {
@@ -143,7 +195,7 @@ class ProductProvider extends Component {
                 handleChange: this.handleChange,
                 changePage: this.changePage,
                 addToFavourites: this.addToFavourites,
-                findInFavourites: this.findInFavourites
+                handleChangePageSize: this.handleChangePageSize
             }}>
                 {this.props.children}
             </ProductContext.Provider>

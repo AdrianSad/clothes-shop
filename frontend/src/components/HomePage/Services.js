@@ -37,15 +37,15 @@ class Services extends Component {
 
                                 <div className="col-8 mx-auto col-sm-4 col-md-3 text-center my-3 card" key={item.id}>
 
-                                    <div className="service-icon" key={item.id}>
+                                    <div className="service-icon">
                                         {item.icon}
                                     </div>
 
-                                    <div className="mt-3 text-capitalize" key={item.id}>
+                                    <div className="mt-3 text-capitalize">
                                         {item.title}
                                     </div>
 
-                                    <div className="mt-3" key={item.id}>
+                                    <div className="mt-3">
                                         <p>{item.text}</p>
                                     </div>
 
