@@ -7,7 +7,7 @@ const ProductFilter = () => {
     return (
         <ProductConsumer>
             {value => {
-                const {search, min, max, price, size, shipping, handleChange} = value;
+                const {search, min, max, price, size, shipping, handleChange, handleChangePageSize, pageSize} = value;
 
                 return (
                     <div className="row my-5">
@@ -51,6 +51,16 @@ const ProductFilter = () => {
                                     <label htmlFor="shipping" className="mx-2">free shipping</label>
                                     <input type="checkbox" name="shipping" id="shipping" onChange={handleChange}
                                            checked={shipping && true}/>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="pageSize" className="mx-2">products per page</label>
+                                    <select name="pageSize" id="pageSize" onChange={handleChangePageSize}
+                                           className="filter-item" value={pageSize}>
+                                        <option value={3}>3</option>
+                                        <option value={6}>6</option>
+                                        <option value={9}>9</option>
+                                    </select>
                                 </div>
                             </FilterWrapper>
                         </div>

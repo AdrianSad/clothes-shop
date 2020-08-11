@@ -128,7 +128,7 @@ class NewProduct extends Component {
                     description: this.state.description,
                     size: this.state.size,
                     featured: this.state.featured,
-                    free_shipping: this.state.shipping,
+                    freeShipping: this.state.shipping,
                     main_image: this.state.images[0].dataURL,
                     image2: this.state.images.length > 1 ? this.state.images[1].dataURL : null,
                     image3: this.state.images.length > 2 ? this.state.images[2].dataURL : null

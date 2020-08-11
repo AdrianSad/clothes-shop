@@ -11,8 +11,14 @@ function Products() {
     return (
         <ProductConsumer>
             {value => {
-                const {filteredProducts, loading, changePage, page} = value;
+                const {filteredProducts, loading, changePage, page, totalPages, totalItems} = value;
 
+                const btnItems = [];
+
+                for (let i = 0; i< totalPages; i++) {
+                    btnItems.push(<button onClick={() => changePage(i)} key={i}
+                            className={`page-btn ${page === i && `page-btn-current`}`}>{i + 1}</button>)
+                }
 
                 if (loading) {
                     return <Loading/>
@@ -27,7 +33,7 @@ function Products() {
                             <div className="row">
                                 <div className="col-10 mx-auto">
                                     <h6 className="text-title">
-                                        total products : {filteredProducts.length}
+                                        total products : {totalItems}
                                         <hr/>
                                     </h6>
                                 </div>
@@ -35,31 +41,60 @@ function Products() {
 
                             <ProductsWrapper>
                                 <div className="row py-5 px-5">
-                                    {
-                                        filteredProducts[page] ? <>
+                                    {/*{*/}
+                                    {/*    filteredProducts[page] ? <>*/}
 
-                                                {filteredProducts[page].map(product => {
+                                    {/*            {filteredProducts[page].map(product => {*/}
+                                    {/*                return <Product key={product.id} product={product}/>*/}
+                                    {/*            })}*/}
+                                    {/*            {filteredProducts.length > 1 && <article className="pagination-buttons">*/}
+                                    {/*                {page > 0 && <button className="prev-page-btn"*/}
+                                    {/*                                     onClick={() => changePage(page - 1)}>*/}
+                                    {/*                    <FaAngleDoubleLeft/>*/}
+                                    {/*                </button>*/}
+                                    {/*                }*/}
+
+                                    {/*                {filteredProducts.map((_, index) => {*/}
+                                    {/*                    return <button onClick={() => changePage(index)} key={index}*/}
+                                    {/*                                   className={`page-btn ${page === index && `page-btn-current`}`}>{index + 1}</button>*/}
+                                    {/*                })}*/}
+
+                                    {/*                {page < filteredProducts.length - 1 &&*/}
+                                    {/*                <button className="next-page-btn"*/}
+                                    {/*                        onClick={() => changePage(page + 1)}>*/}
+                                    {/*                    <FaAngleDoubleRight/>*/}
+                                    {/*                </button>*/}
+                                    {/*                }*/}
+                                    {/*            </article>}*/}
+
+                                    {/*        </>*/}
+                                    {/*        : <div className="col text-title text-center">*/}
+                                    {/*            sorry, no items matched your search*/}
+                                    {/*        </div>*/}
+                                    {/*}*/}
+
+                                    {
+                                        filteredProducts.length > 0 ? <>
+
+                                                {filteredProducts.map(product => {
                                                     return <Product key={product.id} product={product}/>
                                                 })}
-                                                {filteredProducts.length > 1 && <article className="pagination-buttons">
+                                                 <article className="row col-12 pagination-buttons">
                                                     {page > 0 && <button className="prev-page-btn"
                                                                          onClick={() => changePage(page - 1)}>
                                                         <FaAngleDoubleLeft/>
                                                     </button>
                                                     }
 
-                                                    {filteredProducts.map((_, index) => {
-                                                        return <button onClick={() => changePage(index)} key={index}
-                                                                       className={`page-btn ${page === index && `page-btn-current`}`}>{index + 1}</button>
-                                                    })}
+                                                    {btnItems}
 
-                                                    {page < filteredProducts.length - 1 &&
+                                                    {page < totalPages-1 &&
                                                     <button className="next-page-btn"
                                                             onClick={() => changePage(page + 1)}>
                                                         <FaAngleDoubleRight/>
                                                     </button>
                                                     }
-                                                </article>}
+                                                </article>
 
                                             </>
                                             : <div className="col text-title text-center">
