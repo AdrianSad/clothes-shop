@@ -101,6 +101,13 @@ class Login extends React.Component {
     handleLogin() {
 
         if (this.checkBtn.context._errors.length === 0) {
+
+            this.setState({
+                message: "",
+                successful: false,
+                loading: true
+            });
+
             let loginResp = login(this.state.username, this.state.password)
 
             if(loginResp){
@@ -119,12 +126,19 @@ class Login extends React.Component {
                     loading: false
                 });
             }
+        }else {
+            this.setState({
+                message: "",
+                successful: false,
+                loading: false
+            });
         }
     }
 
     async handleRegister() {
 
         if (this.checkBtn.context._errors.length === 0) {
+
             let register = await registerUser(
                 this.state.username,
                 this.state.email,
@@ -138,6 +152,7 @@ class Login extends React.Component {
                     successful: true,
                     loading: false
                 });
+                this.form.hideError(this.passwordInput);
                 this.toggleMember();
             } else {
                 this.setState({
@@ -146,6 +161,12 @@ class Login extends React.Component {
                     loading: false
                 });
             }
+        }else {
+            this.setState({
+                message: "",
+                successful: false,
+                loading: false
+            });
         }
     }
 
@@ -161,7 +182,7 @@ class Login extends React.Component {
          this.form.validateAll();
 
         if (this.state.isMember) {
-            this.handleLogin();
+            await this.handleLogin();
         } else {
             await this.handleRegister();
         }
@@ -202,7 +223,7 @@ class Login extends React.Component {
                                     <label htmlFor="password">
                                         password
                                     </label>
-                                    <Input type="password" id="password" value={this.state.password} className="form-control"
+                                    <Input type="password" id="password" value={this.state.password} className="form-control" ref={c => { this.passwordInput = c }}
                                            onChange={this.onChangePassword} validations={[required, vpassword]}/>
                                 </div>
 

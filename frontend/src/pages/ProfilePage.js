@@ -11,9 +11,23 @@ import {UserConsumer} from "../context/UserContext";
 export default class Profile extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            userProducts: []
+        }
     }
 
+    componentDidMount() {
 
+        getUserProducts().then(response => {
+            const tempProducts = response.data;
+            if(tempProducts) {
+                this.setState({
+                    userProducts: tempProducts
+                })
+            }
+        })
+    }
     render() {
 
         return (<ProductConsumer>
@@ -23,7 +37,7 @@ export default class Profile extends Component {
 
                     return <UserConsumer>{valueUser => {
 
-                        const {user, userProducts} = valueUser;
+                        const {user} = valueUser;
 
                         return <ProfileWrapper>
                             <div className="container">
@@ -45,7 +59,7 @@ export default class Profile extends Component {
                                     <div className="row">
                                         <div className="col-6 my-5">
                                                 <h5>Your products : </h5>
-                                                {userProducts.length !== 0 ? userProducts.map(item => {
+                                                {this.state.userProducts.length !== 0 ? this.state.userProducts.map(item => {
                                                         return <p>
                                                             <Link to={`/products/${item.id}`}>
                                                                 {item.title}
