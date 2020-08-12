@@ -32,9 +32,9 @@ size VARCHAR(4) NOT NULL,
 featured BOOLEAN NOT NULL,
 free_shipping BOOLEAN NOT NULL,
 order_id INTEGER,
-main_image LONGBLOB,
-image2 LONGBLOB,
-image3 LONGBLOB
+main_image TEXT,
+image2 TEXT,
+image3 TEXT
 );
 
 CREATE TABLE roles

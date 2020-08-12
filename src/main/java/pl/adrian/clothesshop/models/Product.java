@@ -30,8 +30,7 @@ public class Product implements Serializable {
     @Column(name = "username")
     private String username;
 
-    @Lob
-    @Column(name = "description")
+    @Column(name = "description",columnDefinition = "text")
     private String description;
 
     @Column(name = "size")
@@ -47,15 +46,12 @@ public class Product implements Serializable {
     @JoinColumn(name="order_id")
     private Order order;
 
-    @Lob
-    @Column(name = "main_image")
-    private byte[] main_image;
+    @Column(name = "main_image",columnDefinition = "text")
+    private String main_image;
 
-    @Lob
-    @Column(name = "image2")
-    private byte[] image2;
+    @Column(name = "image2",columnDefinition = "text")
+    private String image2;
 
-    @Lob
-    @Column(name = "image3")
-    private byte[] image3;
+    @Column(name = "image3",columnDefinition = "text")
+    private String image3;
 }

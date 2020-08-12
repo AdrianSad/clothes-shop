@@ -66,9 +66,9 @@ public class ProductServiceImpl implements ProductService {
                     product.getSize(),
                     product.getFeatured(),
                     product.getFreeShipping(),
-                    product.getMain_image() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getMain_image()) : null,
-                    product.getImage2() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getImage2()) : null,
-                    product.getImage3() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getImage3()) : null
+                    product.getMain_image(),
+                    product.getImage2(),
+                    product.getImage3()
             );
             return productJSON;
         } else {
@@ -102,9 +102,9 @@ public class ProductServiceImpl implements ProductService {
                 .size(productRequest.getSize())
                 .featured(productRequest.getFeatured())
                 .freeShipping(productRequest.getFreeShipping())
-                .main_image(Base64.getDecoder().decode(productRequest.getMain_image().split(",")[1]))
-                .image2(productRequest.getImage2() != null ? Base64.getDecoder().decode(productRequest.getImage2().split(",")[1]) : null)
-                .image3(productRequest.getImage2() != null ? Base64.getDecoder().decode(productRequest.getImage3().split(",")[1]) : null)
+                .main_image(productRequest.getMain_image())
+                .image2(productRequest.getImage2())
+                .image3(productRequest.getImage3())
                 .build();
 
         productRepository.save(product);
@@ -123,7 +123,7 @@ public class ProductServiceImpl implements ProductService {
             Pageable paging = PageRequest.of(page,size, Sort.by("featured").descending());
             Page<Product> productPage;
 
-            if(title == null && !freeShipping && price.equals(BigDecimal.ZERO) && pSize == null){
+            if(title == null && !freeShipping && price.equals(BigDecimal.ZERO) && pSize.equals("ALL")){
                 productPage = productRepository.findAll(paging);
             } else if(!freeShipping && price.equals(BigDecimal.ZERO) && pSize.equals("ALL")){
                 productPage = productRepository.findAllByTitleContainingIgnoreCase(paging, title);
@@ -168,9 +168,9 @@ public class ProductServiceImpl implements ProductService {
                             product.getSize(),
                             product.getFeatured(),
                             product.getFreeShipping(),
-                            product.getMain_image() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getMain_image()) : null,
-                            product.getImage2() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getImage2()) : null,
-                            product.getImage3() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getImage3()) : null
+                            product.getMain_image(),
+                            product.getImage2(),
+                            product.getImage3()
                     );
                     productsJSON.add(productJSON);
                 });
@@ -207,9 +207,9 @@ public class ProductServiceImpl implements ProductService {
                         product.getSize(),
                         product.getFeatured(),
                         product.getFreeShipping(),
-                        product.getMain_image() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getMain_image()) : null,
-                        product.getImage2() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getImage2()) : null,
-                        product.getImage3() != null ? "data:image/png;base64," + Base64.getEncoder().encodeToString(product.getImage3()) : null
+                        product.getMain_image(),
+                        product.getImage2(),
+                        product.getImage3()
                 );
                 productsJSON.add(productJSON);
             });

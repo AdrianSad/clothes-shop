@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,4 +24,6 @@ public class UserRole implements Serializable {
     @Column(name = "name")
     private ERole name;
 
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 }
