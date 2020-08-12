@@ -2,11 +2,9 @@ import React from "react";
 import {FaBars, FaCartPlus} from "react-icons/all";
 import styled from 'styled-components';
 import logo from '../images/logo.svg';
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {CartConsumer} from "../context/CartContext";
 import {UserConsumer} from "../context/UserContext";
-import {getCurrentUser} from "../api/user";
-import {logout} from "../api/user";
 
 export default function Navbar() {
     return (
@@ -69,11 +67,11 @@ export default function Navbar() {
                                                             <Link to="/profile" className="dropdown-btn">Profile</Link>
                                                             <Link to="/products/new" className="dropdown-btn">New
                                                                 Product</Link>
-                                                            <a className="dropdown-btn" onClick={userLogout}>Logout</a>
+                                                            <p className="dropdown-btn" onClick={userLogout}>Logout</p>
                                                         </div>
                                                     </li>
                                                     : <li>
-                                                        <a className="login-btn" onClick={showModal}> Login </a>
+                                                        <p className="login-btn" onClick={showModal}> Login </p>
                                                     </li>
                                             }
 

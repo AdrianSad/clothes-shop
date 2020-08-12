@@ -7,7 +7,6 @@ import Input from "react-validation/build/input";
 import {Redirect, withRouter} from 'react-router-dom';
 
 import {
-    CardElement,
     StripeProvider,
     Elements,
     injectStripe, CardNumberElement, CardExpiryElement, CardCvcElement
@@ -117,10 +116,8 @@ class Checkout extends React.Component {
                                     token: user.token
                                 });
 
-                                console.log("ORDER", order);
 
                                 if (order) {
-                                    console.log("CLEARING")
 
                                     this.setState({
                                         message: "",
@@ -133,9 +130,7 @@ class Checkout extends React.Component {
 
                                         clearCart();
 
-                                        console.log("PUSHING");
                                     });
-
 
 
                                     // this.props.history.push("/products");
@@ -159,7 +154,7 @@ class Checkout extends React.Component {
                         }
 
 
-                        if(this.state.redirect){
+                        if (this.state.redirect) {
                             return <Redirect to="/success"/>;
                         } else if (cart.length === 0) {
                             return <h1 className="text-title text-center my-5" style={{padding: "10rem"}}>
@@ -223,26 +218,14 @@ class Checkout extends React.Component {
                                                            value={this.state.nameOnCart} placeholder="Name on card"
                                                            onChange={this.onChangeNameOnCart}/>
                                                     <label htmlFor="ccnum">Credit card number</label>
-                                                    {/*<input type="text" id="ccnum" name="cardnumber"*/}
-                                                    {/*       placeholder="1111-2222-3333-4444"/>*/}
+
                                                     <CardNumberElement id="ccnum"/>
                                                     <label htmlFor="ccexp">Expiration Date</label>
                                                     <CardExpiryElement id="ccexp"/>
 
                                                     <label htmlFor="cccvc">CVC</label>
                                                     <CardCvcElement id="cccvc"/>
-                                                    {/*<div className="row">*/}
-                                                    {/*    <div className="col-50">*/}
-                                                    {/*        <label htmlFor="expyear">Exp Year</label>*/}
-                                                    {/*        <input type="text" id="expyear" name="expyear"*/}
-                                                    {/*               placeholder="2021"/>*/}
-                                                    {/*    </div>*/}
-                                                    {/*    <div className="col-50">*/}
-                                                    {/*        <label htmlFor="cvv">CVV</label>*/}
-                                                    {/*        <input type="text" id="cvv" name="cvv"*/}
-                                                    {/*               placeholder="352"/>*/}
-                                                    {/*    </div>*/}
-                                                    {/*</div>*/}
+
                                                 </div>
 
                                             </div>
@@ -269,8 +252,9 @@ class Checkout extends React.Component {
                                         <h4 className="my-3">Cart <span className="price">
                                             <FaShoppingCart/><b>{cartItems}</b></span></h4>
                                         {cart.map(item => {
-                                            return <p><Link to={`/products/${item.id}`}>{item.title}<span
-                                                className="price">{item.price}</span></Link></p>
+                                            return <p key={item.id}><Link to={`/products/${item.id}`}
+                                                                          key={item.id}>{item.title}<span
+                                                className="price" key={item.id}>{item.price}</span></Link></p>
                                         })}
                                         <hr/>
                                         <p>Total <span className="price"><b>{cartTotal} zł</b></span></p>

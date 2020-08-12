@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
-import {FaSearchPlus, FaCartPlus, FaStar} from "react-icons/fa";
+import {FaSearchPlus, FaCartPlus} from "react-icons/fa";
 import {ProductConsumer} from "../context/ProductsContext";
 import {Lightbox} from "react-modal-image";
 import * as PropTypes from "prop-types";
@@ -53,7 +53,7 @@ export default class Product extends Component {
                                             <div className="img-container">
                                                 <Link to={`/products/${product.id}`}>
                                                     <img src={product.main_image || no_image} className="card-img-top"
-                                                         alt="product image"
+                                                         alt="product"
                                                          style={{height: '320px'}}/>
 
                                                 </Link>

@@ -32,12 +32,9 @@ class Services extends Component {
                 <div className="container">
                     <div className="row">
                         {this.state.services.map(item => {
-                            return (
-                                <>
+                            return ( <div className="col-8 mx-auto col-sm-4 col-md-3 text-center my-3 card" key={item.id}>
 
-                                <div className="col-8 mx-auto col-sm-4 col-md-3 text-center my-3 card" key={item.id}>
-
-                                    <div className="service-icon">
+                                    <div className="service-icon" key={item.id}>
                                         {item.icon}
                                     </div>
 
@@ -50,7 +47,6 @@ class Services extends Component {
                                     </div>
 
                                 </div>
-                            </>
                             )
                         })}
                     </div>

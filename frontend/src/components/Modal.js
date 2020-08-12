@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import {UserConsumer} from "../context/UserContext";
-import LoginPage from "./Login";
 import Login from "./Login";
 
 export default function Modal() {

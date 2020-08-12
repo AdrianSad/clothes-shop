@@ -8,7 +8,6 @@ const FloatingLabel = props => {
     const labelClass =
         focus || (value && value.length !== 0) ? "label label-float" : "label";
 
-    console.log(value);
     return (<FloatWrapper>
             <div
                 className="float-label"

@@ -7,7 +7,6 @@ import ReactTooltip from 'react-tooltip';
 import {sizes} from "../context/sizes";
 import {FaTimesCircle, FaSync, FaUpload, FaTrash} from "react-icons/all";
 import ImageUploading from "react-images-uploading";
-import {login, registerUser} from "../api/user";
 import CheckButton from "react-validation/build/button";
 import submitProduct from "../api/product";
 
@@ -73,7 +72,6 @@ class NewProduct extends Component {
         this.setState({
             images: imageList
         })
-        console.log(imageList);
     };
     onError = (errors, files) => {
         console.log(errors, files);
@@ -261,10 +259,10 @@ class NewProduct extends Component {
                                             // write your building UI
                                             <div>
                                                 <button type="button" onClick={onImageUpload}>
-                                                    <FaUpload class="btn-icon"/> Upload images
+                                                    <FaUpload className="btn-icon"/> Upload images
                                                 </button>
                                                 <button type="button" onClick={onImageRemoveAll}>
-                                                    <FaTrash class="btn-icon"/>
+                                                    <FaTrash className="btn-icon"/>
                                                     Remove all images
                                                 </button>
                                                 <div>
@@ -273,7 +271,7 @@ class NewProduct extends Component {
                                                         <div className="img-container">
 
                                                             <div key={image.key}>
-                                                                <img src={image.dataURL} key={image.key}/>
+                                                                <img alt="new product" src={image.dataURL} key={image.key}/>
                                                                 <div className="image-icons">
                                                                     <FaSync className="image-icon"
                                                                             onClick={image.onUpdate}/>

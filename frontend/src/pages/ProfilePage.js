@@ -1,11 +1,9 @@
 import React, {Component} from "react";
-import {getCurrentUser} from "../api/user";
 import styled from "styled-components";
 import {FaUserCircle, FaHeart} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {ProductConsumer} from "../context";
 import {getUserProducts} from "../api/product";
-import Loading from "../components/Loading";
 import {UserConsumer} from "../context/UserContext";
 
 export default class Profile extends Component {
@@ -62,8 +60,8 @@ export default class Profile extends Component {
                                         <div className="col-6 my-5">
                                                 <h5>Your products : </h5>
                                                 {this.state.userProducts.length !== 0 ? this.state.userProducts.map(item => {
-                                                        return <p>
-                                                            <Link to={`/products/${item.id}`}>
+                                                        return <p key={item.id}>
+                                                            <Link to={`/products/${item.id}`} key={item.id}>
                                                                 {item.title}
                                                             </Link>
                                                         </p>
@@ -74,10 +72,10 @@ export default class Profile extends Component {
                                         <div className="col-6 my-5">
                                             <h5><FaHeart className="fav-icon"/>Saved products : {favourites.length}</h5>
                                             {favourites.map(item => {
-                                                return <p>
-                                                    <Link to={`/products/${item.id}`}>
+                                                return <p key={item.id}>
+                                                    <Link to={`/products/${item.id}`} key={item.id}>
                                                         {item.title}
-                                                        <span className="price">
+                                                        <span className="price" key={item.id}>
                                     {item.price}zł
                                 </span>
                                                     </Link>

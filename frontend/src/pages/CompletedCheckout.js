@@ -1,15 +1,10 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 import Title from "../components/Title";
-import * as PropTypes from "prop-types";
 import {Link, withRouter} from "react-router-dom";
 import {UserConsumer} from "../context/UserContext";
 
 class CompletedCheckout extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
 

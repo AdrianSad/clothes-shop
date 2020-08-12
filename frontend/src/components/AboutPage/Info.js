@@ -10,7 +10,7 @@ export default function Info() {
                 <div className="row">
 
                     <div className="col-10 mx-auto col-md-6 my-3">
-                        <img src={aboutBG} className="img-fluid img-thumbnail" alt="About us image"
+                        <img src={aboutBG} className="img-fluid img-thumbnail" alt="About us"
                         style={{background: "var(--darkGrey)"}}/>
                     </div>
 

@@ -52,6 +52,7 @@ class ProductProvider extends Component {
                     })
                 }
             }
+            return;
         });
     }
 
@@ -66,11 +67,9 @@ class ProductProvider extends Component {
         params["pSize"] = this.state.size;
 
         getAllFiltered(params).then(response => {
-            console.log(response);
             if(response) {
                 const {totalPages, products, totalItems} = response.data;
 
-                console.log(response.data);
                 // SETTING IMAGE FOR INITIALIZED PRODUCTS
                 const tempProducts = products;
                 if (tempProducts) {
@@ -99,21 +98,6 @@ class ProductProvider extends Component {
         })
     }
 
-    // paginate = (products) => {
-    //
-    //     const productsPerPage = 3;
-    //     const numberOfPages = Math.ceil(products.length / productsPerPage);
-    //
-    //     // const newProducts = Array.from({length:numberOfPages}, () => {
-    //     //    return products.splice(0,productsPerPage);
-    //     // });
-    //
-    //     return Array.from({length: numberOfPages}, (_, index) => {
-    //         const start = index * productsPerPage;
-    //         return products.slice(start, start + productsPerPage);
-    //     });
-    // };
-
     changePage = (index) => {
         this.setState({
             page: index,
@@ -127,9 +111,7 @@ class ProductProvider extends Component {
                 pageSize: event.target.value,
                 page: 0
             },
-            () => {
-                this.retrieveFilteredProducts();
-            }
+            () => this.retrieveFilteredProducts()
         );
     }
 
