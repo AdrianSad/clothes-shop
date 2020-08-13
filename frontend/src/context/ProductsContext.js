@@ -17,7 +17,7 @@ class ProductProvider extends Component {
         size: "ALL",
         shipping: false,
         page: 0,
-        pageSize: 3,
+        pageSize: 4,
         totalPages: 0,
         totalItems: 0,
         favourites: localStorage.getItem('favourites') ? JSON.parse(localStorage.getItem('favourites')) : []

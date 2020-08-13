@@ -9,7 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.adrian.clothesshop.models.Product;
 import pl.adrian.clothesshop.models.payload.request.ProductRequest;
-import pl.adrian.clothesshop.models.payload.response.ProductResponse;
 import pl.adrian.clothesshop.repositories.ProductRepository;
 import pl.adrian.clothesshop.services.ProductService;
 
@@ -41,7 +40,7 @@ public class ProductController {
 
 
     @GetMapping("/featured")
-    public ResponseEntity<List<ProductResponse>> getAllFeatured() {
+    public ResponseEntity<Iterable<Product>> getAllFeatured() {
 
         return productService.getAllFeatured();
     }
@@ -53,10 +52,10 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable String id) {
+    public ResponseEntity<Product> getProduct(@PathVariable String id) {
 
         try {
-            ProductResponse product = productService.getProductResponse(Long.valueOf(id));
+            Product product = productService.getProduct(Long.valueOf(id));
 
             if (product == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

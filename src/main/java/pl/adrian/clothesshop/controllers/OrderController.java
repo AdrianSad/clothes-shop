@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.adrian.clothesshop.models.Order;
 import pl.adrian.clothesshop.models.payload.request.ChargeRequest;
 import pl.adrian.clothesshop.models.payload.response.ChargeResponse;
-import pl.adrian.clothesshop.models.payload.response.ProductResponse;
 import pl.adrian.clothesshop.services.OrderService;
 import pl.adrian.clothesshop.services.StripeServiceImpl;
 

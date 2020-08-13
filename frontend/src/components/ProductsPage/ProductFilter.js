@@ -57,9 +57,9 @@ const ProductFilter = () => {
                                     <label htmlFor="pageSize" className="mx-2">products per page</label>
                                     <select name="pageSize" id="pageSize" onChange={handleChangePageSize}
                                            className="filter-item" value={pageSize}>
-                                        <option value={3}>3</option>
-                                        <option value={6}>6</option>
-                                        <option value={9}>9</option>
+                                        <option value={4}>4</option>
+                                        <option value={8}>8</option>
+                                        <option value={12}>12</option>
                                     </select>
                                 </div>
                             </FilterWrapper>

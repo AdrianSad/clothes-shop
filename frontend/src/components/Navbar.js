@@ -53,12 +53,6 @@ export default function Navbar() {
 
                                             <Link to="/"><img className="nav-logo" src={logo}
                                                               alt="Clothes Shop Logo"/></Link>
-                                            {/*<li>*/}
-                                            {/*    { user.token*/}
-                                            {/*        ? <a className="login-btn" onClick={userLogout}> Logout </a>*/}
-                                            {/*            : <a className="login-btn" onClick={showModal}> Login </a>*/}
-                                            {/*    }*/}
-                                            {/*</li>*/}
 
                                             {
                                                 user.token ? <li className="dropdown">
@@ -120,13 +114,7 @@ const NavWrapper = styled.nav`
     .nav-logo{
     padding-right: 2rem;
     }
-    
-    @media screen and (max-width: 600px) {
-    .nav-logo img {
-    display: none;
-    }
-    }
-
+ 
     .nav-icon {
     font-size: 1.5rem;
     cursor: pointer;
@@ -160,7 +148,7 @@ const NavWrapper = styled.nav`
     
     li .dropdown-btn{
   display: inline-block;
-  color: white;
+  color: var(--mainWhite);
   text-decoration: none;
   transition: var(--mainTransition);
 }
@@ -184,6 +172,7 @@ const NavWrapper = styled.nav`
   text-decoration: none;
   display: block;
   text-align: left;
+  margin: 0;
 }
 
  .dropdown-content .dropdown-btn:hover{
@@ -233,20 +222,18 @@ const NavWrapper = styled.nav`
       cursor: pointer;
     }
 
-    
-    @media (max-width: 767px) {        
-    padding: 1rem 1.5rem;       
-   .nav-logo,
-    .nav-logo-hidden{
-      display: none;
-   }
-}
-
-@media (max-width: 960px) {        
-    padding: 1rem 1.5rem;   
-    .nav-logo {
+    @media only screen and (max-width: 768px) {  
+    padding: ${props => (props.hide ? "1rem 1.5rem" : "0rem")};  
+    .nav-logo{
       display: none;
    }    
+   
+   .nav-logo-hidden{
+   max-width: 50vw;
+   }
+   .nav-link,
+   .login-btn{
+   font-size: 1rem;
+   }
 }
-
     `;

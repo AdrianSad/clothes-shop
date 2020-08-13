@@ -277,7 +277,7 @@ const CardForm = injectStripe(Checkout);
 const StripeWrapper = () => {
 
     return <StripeProvider
-        apiKey="pk_test_51HC8orFEHOPr8pJCshfalE3vXBksByNDjlSMb9iId2vrVnVvB8Auj6udTvTc54bNC34QFATt0qP8mtPW30BslSlu00VHX0Zm0B">
+        apiKey={process.env.REACT_APP_STRIPE}>
         <Elements>
             <CardForm/>
         </Elements>

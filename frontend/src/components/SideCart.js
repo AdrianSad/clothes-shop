@@ -61,4 +61,8 @@ padding: 0 !important;
 list-style: none;
 }
 
+@media (max-width: 960px) {        
+      top: 57px;
+  
+
 `;

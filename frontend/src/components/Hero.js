@@ -4,7 +4,7 @@ import homeBG from "../images/homeBG.jpg";
 export default function Hero({img, title, max, children}) {
     return (
         <HeroWrapper max={max} img={img}>
-            <div className="banner">
+            <div>
                 <h1 className="title">{title}</h1>
             {children}
             </div>
@@ -27,6 +27,12 @@ background: linear-gradient(var(--primaryRGBA), var(--primaryRGBA)),
  text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
  text-transform: uppercase;
  letter-spacing: var(--mainSpacing);
+ }
+ 
+ @media only screen and (max-width: 768px) {  
+ .title{
+ font-size: 2rem
+ }
  }
 `;
 

@@ -7,9 +7,9 @@ export default function Sidebar() {
     return (
         <CartConsumer>
             {value => {
-                const {links, sidebarOpen, handleSidebar} = value;
+                const {links, sidebarOpen, handleSidebar, closeSidebar} = value;
 
-                return <SideWrapper show={sidebarOpen}>
+                return <SideWrapper show={sidebarOpen} onClick={closeSidebar}>
                     <ul>
                         {links.map(link => {
                             return (

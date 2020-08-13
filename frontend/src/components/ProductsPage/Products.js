@@ -40,39 +40,7 @@ function Products() {
                             </div>
 
                             <ProductsWrapper>
-                                <div className="row py-5 px-5">
-                                    {/*{*/}
-                                    {/*    filteredProducts[page] ? <>*/}
-
-                                    {/*            {filteredProducts[page].map(product => {*/}
-                                    {/*                return <Product key={product.id} product={product}/>*/}
-                                    {/*            })}*/}
-                                    {/*            {filteredProducts.length > 1 && <article className="pagination-buttons">*/}
-                                    {/*                {page > 0 && <button className="prev-page-btn"*/}
-                                    {/*                                     onClick={() => changePage(page - 1)}>*/}
-                                    {/*                    <FaAngleDoubleLeft/>*/}
-                                    {/*                </button>*/}
-                                    {/*                }*/}
-
-                                    {/*                {filteredProducts.map((_, index) => {*/}
-                                    {/*                    return <button onClick={() => changePage(index)} key={index}*/}
-                                    {/*                                   className={`page-btn ${page === index && `page-btn-current`}`}>{index + 1}</button>*/}
-                                    {/*                })}*/}
-
-                                    {/*                {page < filteredProducts.length - 1 &&*/}
-                                    {/*                <button className="next-page-btn"*/}
-                                    {/*                        onClick={() => changePage(page + 1)}>*/}
-                                    {/*                    <FaAngleDoubleRight/>*/}
-                                    {/*                </button>*/}
-                                    {/*                }*/}
-                                    {/*            </article>}*/}
-
-                                    {/*        </>*/}
-                                    {/*        : <div className="col text-title text-center">*/}
-                                    {/*            sorry, no items matched your search*/}
-                                    {/*        </div>*/}
-                                    {/*}*/}
-
+                                <div className="row py-5">
                                     {
                                         filteredProducts.length > 0 ? <>
 

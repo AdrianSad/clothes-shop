@@ -47,7 +47,7 @@ export default class Product extends Component {
                                     )}
 
                                     <ProductWrapper featured={product.featured}
-                                                    className="col-10 mx-auto col-sm-8 col-md-6 col-lg-4 my-3 px-4">
+                                                    className="col-10 mx-auto col-sm-6 col-md-6 col-lg-3 my-3">
                                         <div className="card">
 
                                             <div className="img-container">
@@ -138,7 +138,7 @@ opacity: 0;
 
 .icon{
 font-size: 2.5rem;
-margin: 1rem;
+margin: 0.5rem;
 padding: 0.5rem;
 color: var(--primaryColor);
 background: var(--mainBlack);

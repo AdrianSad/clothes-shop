@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.adrian.clothesshop.models.Product;
 import pl.adrian.clothesshop.models.payload.request.ProductRequest;
-import pl.adrian.clothesshop.models.payload.response.ProductResponse;
 import pl.adrian.clothesshop.repositories.ProductRepository;
 import pl.adrian.clothesshop.security.UserDetailsImpl;
 
@@ -50,31 +49,6 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
-    @Override
-    public ProductResponse getProductResponse(Long id) {
-        Optional<Product> productOptional = productRepository.findById(id);
-
-        if (productOptional.isPresent()) {
-
-            Product product = productOptional.get();
-            ProductResponse productJSON = new ProductResponse(
-                    product.getId(),
-                    product.getTitle(),
-                    product.getPrice(),
-                    product.getUsername(),
-                    product.getDescription(),
-                    product.getSize(),
-                    product.getFeatured(),
-                    product.getFreeShipping(),
-                    product.getMain_image(),
-                    product.getImage2(),
-                    product.getImage3()
-            );
-            return productJSON;
-        } else {
-            throw new RuntimeException("Product Not Found");
-        }
-    }
 
     @Override
     public Product getProduct(Long id) {
@@ -119,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<Map<String, Object>> getFilteredProducts(int page, int size, String title,  boolean freeShipping, BigDecimal price, String pSize) {
         try {
-            List<ProductResponse> productsJSON = new ArrayList<ProductResponse>();
+            List<Product> productsJSON = new ArrayList<Product>();
             Pageable paging = PageRequest.of(page,size, Sort.by("featured").descending());
             Page<Product> productPage;
 
@@ -158,22 +132,7 @@ public class ProductServiceImpl implements ProductService {
             }
 
             if(productPage != null && productPage.hasContent()) {
-                productPage.getContent().forEach(product -> {
-                    ProductResponse productJSON = new ProductResponse(
-                            product.getId(),
-                            product.getTitle(),
-                            product.getPrice(),
-                            product.getUsername(),
-                            product.getDescription(),
-                            product.getSize(),
-                            product.getFeatured(),
-                            product.getFreeShipping(),
-                            product.getMain_image(),
-                            product.getImage2(),
-                            product.getImage3()
-                    );
-                    productsJSON.add(productJSON);
-                });
+                productsJSON.addAll(productPage.getContent());
             }
             if(productsJSON.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -192,29 +151,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<List<ProductResponse>> getAllFeatured(){
+    public ResponseEntity<Iterable<Product>> getAllFeatured(){
         try {
             Iterable<Product> products = productRepository.findAllByFeatured(true);
-            List<ProductResponse> productsJSON = new ArrayList<ProductResponse>();
 
-            products.forEach(product -> {
-                ProductResponse productJSON = new ProductResponse(
-                        product.getId(),
-                        product.getTitle(),
-                        product.getPrice(),
-                        product.getUsername(),
-                        product.getDescription(),
-                        product.getSize(),
-                        product.getFeatured(),
-                        product.getFreeShipping(),
-                        product.getMain_image(),
-                        product.getImage2(),
-                        product.getImage3()
-                );
-                productsJSON.add(productJSON);
-            });
 
-            return new ResponseEntity<>(productsJSON, HttpStatus.OK);
+            return new ResponseEntity<>(products, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
