@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import pl.adrian.clothesshop.exceptions.NotFoundException;
 import pl.adrian.clothesshop.models.Product;
 import pl.adrian.clothesshop.models.payload.request.ProductRequest;
 import pl.adrian.clothesshop.repositories.ProductRepository;
@@ -54,17 +56,16 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable String id) {
 
-        try {
+//        try {
+
             Product product = productService.getProduct(Long.valueOf(id));
 
-            if (product == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
             return new ResponseEntity<>(product, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+            // MOVED TO CONTROLLER ADVICE
+//        } catch (NotFoundException notFoundException){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, notFoundException.getMessage(), notFoundException);
+//        }
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")

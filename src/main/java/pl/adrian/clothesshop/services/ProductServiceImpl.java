@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.adrian.clothesshop.exceptions.NotFoundException;
 import pl.adrian.clothesshop.models.Product;
 import pl.adrian.clothesshop.models.payload.request.ProductRequest;
 import pl.adrian.clothesshop.repositories.ProductRepository;
@@ -57,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         if (productOptional.isPresent()) {
             return productOptional.get();
         }else {
-            throw new RuntimeException("Product Not Found");
+            throw new NotFoundException("Product Not Found");
         }
     }
 

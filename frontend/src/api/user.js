@@ -8,7 +8,7 @@ async function registerUser(username, email, password) {
         username,
         email,
         password
-    }).catch(error => console.log(error));
+    });
 }
 
 async function login(username, password) {
@@ -22,7 +22,7 @@ async function login(username, password) {
         }
 
         return response.data;
-    }).catch(error => console.log(error));
+    });
 }
 
 function logout() {

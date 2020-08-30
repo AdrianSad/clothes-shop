@@ -64,6 +64,4 @@ export async function getProduct(id){
             {
                 "Content-type": "application/json"
             }
-        )
-        .catch(error => console.log(error));
-}
+        )}

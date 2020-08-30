@@ -109,6 +109,13 @@ class Login extends React.Component {
             });
 
             let loginResp = await login(this.state.username, this.state.password)
+                .catch(error =>
+                    this.setState({
+                        message: error.response.data.error,
+                        successful: false,
+                        loading: false
+                    })
+                );
 
             if(loginResp){
                 this.setState({
@@ -119,12 +126,6 @@ class Login extends React.Component {
                 // this.props.history.push("/profile");
                  window.location.reload();
                  return;
-            } else {
-                this.setState({
-                    message: "There was an error. please try again!",
-                    successful: false,
-                    loading: false
-                });
             }
         }else {
             this.setState({
@@ -143,6 +144,12 @@ class Login extends React.Component {
                 this.state.username,
                 this.state.email,
                 this.state.password
+            ).catch(error =>
+                this.setState({
+                    message: error.response.data.error,
+                    successful: false,
+                    loading: false
+                })
             );
 
             if(register){
@@ -154,12 +161,6 @@ class Login extends React.Component {
                 });
                 this.form.hideError(this.passwordInput);
                 this.toggleMember();
-            } else {
-                this.setState({
-                    message: "There was an error. please try again!",
-                    successful: false,
-                    loading: false
-                });
             }
         }else {
             this.setState({
@@ -234,6 +235,7 @@ class Login extends React.Component {
                                         type="text"
                                         className="form-control"
                                         name="email"
+                                        id="email"
                                         value={this.state.email}
                                         onChange={this.onChangeEmail}
                                         validations={[required, vemail]}
@@ -345,6 +347,11 @@ background: var(--mainWhite);
 position: absolute;
 top: -50px;
 left: calc(50% - 50px);
+}
+
+.login-form{
+  max-height: 50vh;
+  overflow-y: scroll;
 }
 
 .login-form input{

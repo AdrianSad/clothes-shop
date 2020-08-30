@@ -1,8 +1,17 @@
 package pl.adrian.clothesshop.services;
 
+import org.springframework.http.ResponseEntity;
 import pl.adrian.clothesshop.models.User;
+import pl.adrian.clothesshop.models.payload.request.LoginRequest;
+import pl.adrian.clothesshop.models.payload.request.RegisterRequest;
+
+import javax.validation.Valid;
 
 public interface UserService {
 
     User getUser(Long id);
+
+    ResponseEntity<?> signInUser(LoginRequest loginRequest);
+
+    ResponseEntity<?> signUpUser(RegisterRequest registerRequest);
 }

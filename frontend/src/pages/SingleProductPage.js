@@ -10,6 +10,7 @@ import inpost_logo from "../images/inpost_logo.svg"
 import {getProduct} from "../api/product";
 import {items} from "../context/productData";
 import { withRouter } from "react-router";
+import Error from "../components/Error";
 
 class SingleProductPage extends React.Component {
     constructor(props) {
@@ -17,7 +18,8 @@ class SingleProductPage extends React.Component {
 
         this.state = {
             singleProduct: {},
-            loading: true
+            loading: true,
+            errorMessage: ""
         };
     }
 
@@ -26,6 +28,7 @@ class SingleProductPage extends React.Component {
 
         getProduct(id).then(response => {
             if(response) {
+                console.log(response);
                 if (response.data) {
                     const tempProduct = response.data;
                     if (tempProduct.id < 7) {
@@ -34,11 +37,19 @@ class SingleProductPage extends React.Component {
 
                     this.setState({
                         singleProduct: tempProduct,
-                        loading: false
+                        loading: false,
+                        errorMessage: ""
                     });
                 }
             }
-        });
+        })
+            .catch(error => {
+
+                this.setState({
+                    loading: false,
+                    errorMessage: `${error.response.data.code} ${error.response.data.message}`
+                })
+            });
     }
 
     render() {
@@ -46,10 +57,11 @@ class SingleProductPage extends React.Component {
 
         if(this.state.loading){
             return <Loading/>
+        } if(this.state.errorMessage.length > 0){
+            return <Error errorMessage={this.state.errorMessage}/>
         } else {
             return (
                 <>
-                    {/*<Hero img={cartBG} title="product details"/>*/}
                     <ProductConsumer>
                         {value => {
                             const {addToFavourites, favourites} = value;
@@ -60,17 +72,14 @@ class SingleProductPage extends React.Component {
 
                                 const {addToCart} = valueCart;
 
-                                let images;
-
-                                if (image2 && image3) {
-                                    images = [
+                                    const images = [
                                         {
                                             original: main_image,
                                             thumbnail: main_image,
                                             thumbnailClass: "img-thumbnail",
                                             originalClass: "img-fluid"
-                                        }
-                                        , {
+                                        },
+                                        {
                                             original: image2,
                                             thumbnail: image2,
                                             thumbnailClass: "img-thumbnail",
@@ -83,27 +92,9 @@ class SingleProductPage extends React.Component {
                                             originalClass: "img-fluid"
                                         }
                                     ];
-                                } else if (image2) {
-                                    images = [{
-                                        original: main_image,
-                                        thumbnail: main_image,
-                                        thumbnailClass: "img-thumbnail",
-                                        originalClass: "img-fluid"
-                                    }
-                                        , {
-                                            original: image2,
-                                            thumbnail: image2,
-                                            thumbnailClass: "img-thumbnail",
-                                            originalClass: "img-fluid"
-                                        }];
-                                } else {
-                                    images = [{
-                                        original: main_image,
-                                        thumbnail: main_image,
-                                        thumbnailClass: "img-thumbnail",
-                                        originalClass: "img-fluid"
-                                    }];
-                                }
+
+                                    images.filter(image => image.original !== null);
+
 
                                 return <ProductWrapper>
                                     <section className="py-5 product-container">
