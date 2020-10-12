@@ -61,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/auth/**").permitAll()
                 .antMatchers("/orders/**").permitAll()
                 .antMatchers("/products/**").permitAll()
+                .antMatchers("/admin/**").fullyAuthenticated()
                 .anyRequest().authenticated();
 
         http.headers().frameOptions().disable();

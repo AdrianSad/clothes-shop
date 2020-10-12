@@ -21,10 +21,7 @@ import pl.adrian.clothesshop.repositories.UserRepository;
 import pl.adrian.clothesshop.security.JwtUtils;
 import pl.adrian.clothesshop.security.UserDetailsImpl;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,6 +54,13 @@ public class UserServiceImpl implements UserService{
         } else {
             throw new NotFoundException("User Not Found");
         }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().iterator().forEachRemaining(users::add);
+        return users;
     }
 
     @Override

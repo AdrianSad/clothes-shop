@@ -52,3 +52,7 @@ body{
 .cart-icon {
   cursor: pointer;
 }
+
+.mt-navbar{
+  margin-top: 106px;
+}

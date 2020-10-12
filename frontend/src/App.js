@@ -23,6 +23,7 @@ import Checkout from "./pages/Checkout";
 import NewProduct from "./pages/NewProduct";
 import LoginPage from "./pages/LoginPage";
 import CompletedCheckout from "./pages/CompletedCheckout";
+import AdminPage from "./pages/AdminPage";
 
 class App extends React.Component {
 
@@ -46,6 +47,7 @@ class App extends React.Component {
                     <PrivateRoute path="/profile" component={Profile}/>
                     <Route path="/cart" component={Cart}/>
                     <Route path="/products/:id" component={SingleProduct}/>
+                    <PrivateRoute path="/admin" component={AdminPage}/>
                     <Route component={Default}/>
                 </Switch>
                 <Footer/>

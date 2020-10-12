@@ -28,7 +28,6 @@ class SingleProductPage extends React.Component {
 
         getProduct(id).then(response => {
             if(response) {
-                console.log(response);
                 if (response.data) {
                     const tempProduct = response.data;
                     if (tempProduct.id < 7) {
